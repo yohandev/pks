@@ -1,0 +1,20 @@
+{
+  "name": "skullhouse.mit.edu",
+  "version": "1.0.0",
+  "description": "Website(public + internal) for MIT's Alpha Mu chapter of Phi Kappa Sigma(Skullhouse)",
+  "main": "index.js",
+  "author": "Yohan Guyomard <yohang@mit.edu>",
+  "license": "MIT",
+  "scripts": {
+    "build": "node build.js",
+    "watch": "node build.js --watch",
+    "serve": "yarn watch & http-server www"
+  },
+  "devDependencies": {
+    "esbuild": "^0.17.19",
+    "http-server": "^14.1.1"
+  },
+  "dependencies": {
+    "preact": "^10.15.0"
+  }
+}
