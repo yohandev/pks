@@ -7,6 +7,7 @@ const opt = {
     minify: true,
     sourcemap: true,
     outfile: "www/app.js",
+    external: ["assets/*"],
 
     // Preact
     jsxFactory: "h",
@@ -14,7 +15,7 @@ const opt = {
     jsxImportSource: "preact",
     jsx: "automatic",
     loader: {
-        ".js": "jsx"
+        ".js": "jsx",
     },
 
     // Defines
@@ -28,7 +29,7 @@ const opt = {
     const ctx = await esbuild.context(opt);
     await ctx.watch();
     const { host, port } = await ctx.serve({
-        servedir: "www"
+        servedir: "www",
     });
 
     console.log(`Serving: http://${host}:${port}`);

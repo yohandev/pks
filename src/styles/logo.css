@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Playfair+Display&display=swap");
+
+/* Light Theme Defaults */
+.logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    height: 84px;
+}
+
+.logo #picture {
+    background: url("assets/logo_light.png");
+    background-size: cover;
+
+    aspect-ratio: 1 / 1;
+    height: 100%;
+
+    transform: translateY(-8px);
+    margin-right: 8px;
+}
+
+.logo #text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo #subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 12px;
+}
+
+.logo #title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 28px;
+}
+
+/* Dark Theme Overrides */
+@media (prefers-color-scheme: dark) {
+    .logo #picture {
+        background: url("assets/logo_dark.png");
+        background-size: cover;
+    }
+}
