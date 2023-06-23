@@ -4,7 +4,7 @@
 :root {
     --foreground: #161616;
     --background: #ece8df;
-    --highlight: #ffe59f;
+    --highlight: #d3a422;
 }
 
 /* Dark Theme Overrides */
@@ -12,6 +12,7 @@
     :root {
         --foreground: white;
         --background: #161616;
+        --highlight: #ffe59f;
     }
 }
 

@@ -14,7 +14,13 @@ import "../styles/menu.css";
 export function Menu({ children, ...props }) {
     return (
         <div class="menu no-select" {...props}>
-            {children}
+            <input id="toggle" type="checkbox"/>
+            <label id="hamburger" for="toggle">
+                <i class="fa-solid fa-bars fa-2xl" id="icon"></i>
+            </label>
+            <div id="container">
+                {children}
+            </div>
         </div>
     );
 }

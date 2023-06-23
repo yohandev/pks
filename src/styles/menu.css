@@ -1,9 +1,10 @@
-.menu {
+/* Default Layout */
+.menu #container {
     display: flex;
     flex-direction: row;
 }
 
-.menu > * {
+.menu #container > * {
     padding: 10px calc(max(5px, min(20px, 1.5vw)));
     font-size: 18px;
 
@@ -11,6 +12,82 @@
     cursor: pointer;
 }
 
-.menu > *:hover {
+.menu #container > *:hover {
     color: var(--highlight);
+}
+
+.menu #container > a:active {
+    text-decoration: underline;
+}
+
+.menu #toggle,
+.menu #hamburger {
+    display: none;
+}
+
+/* Hamburger Layout */
+@media (max-width: 800px) {
+    /* By default, the hamburger is display: none */
+    .menu #hamburger {
+        display: initial;
+    }
+
+    .menu #hamburger #icon {
+        color: var(--foreground);
+        cursor: pointer;
+
+        padding: 20px 0;
+        margin: 0 15px;
+
+        transition: transform 0.25s ease;
+    }
+
+    /* Hamburger when active */
+    .menu #toggle:checked ~ #hamburger #icon {
+        transform: rotate(90deg);
+    }
+
+    /* Changes the menu from row to column-fullscreen */
+    /* Hides the menu options unless hamburger is active */
+    .menu #container {
+        background: var(--background);
+        overflow: hidden;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin-top: 80px;
+
+        width: 100%;
+        height: 0;
+
+        transition: height 0.5s ease;
+    }
+
+    /* Shows the menu when hamburger is active */
+    .menu #toggle:checked ~ #container {
+        height: 100%;
+    }
+
+    /* Hamburger is most likely mobile-first, so make menu options bigger */
+    .menu #container > * {
+        padding: 0.5em 10px;
+        font-size: 26px;
+
+        /* This is to undo the fullscreen #container offset(margin-top) */
+        transform: translateY(-80px);
+
+        opacity: 0;
+        transition: opacity 0.15s ease-in 0.1s;
+    }
+
+    /* Immediately showing the text on hamburger expand looks ugly; workaround: */
+    .menu #toggle:checked ~ #container > * {
+        opacity: 1;
+    }
 }
