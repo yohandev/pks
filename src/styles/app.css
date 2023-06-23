@@ -1,0 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Playfair+Display&display=swap");
+
+/* Light Theme Defaults */
+:root {
+    --foreground: #161616;
+    --background: #ece8df;
+    --highlight: #ffe59f;
+}
+
+/* Dark Theme Overrides */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --foreground: white;
+        --background: #161616;
+    }
+}
+
+html, body {
+    color: var(--foreground);
+    background: var(--background);
+
+    font-family: 'Playfair Display', serif;
+}
+
+h1 {
+    font-family: 'Libre Baskerville', serif;
+}
+
+.no-select {
+    -webkit-user-select: none;
+    user-select: none;
+}

@@ -1,0 +1,16 @@
+.menu {
+    display: flex;
+    flex-direction: row;
+}
+
+.menu > * {
+    padding: 10px calc(max(5px, min(20px, 1.5vw)));
+    font-size: 18px;
+
+    transition: color 0.15s ease;
+    cursor: pointer;
+}
+
+.menu > *:hover {
+    color: var(--highlight);
+}

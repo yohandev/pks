@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Playfair+Display&display=swap");
-
 /* Light Theme Defaults */
 .logo {
     display: flex;
@@ -7,6 +5,8 @@
     align-items: center;
 
     height: 84px;
+
+    cursor: pointer;
 }
 
 .logo #picture {
@@ -18,11 +18,14 @@
 
     transform: translateY(-8px);
     margin-right: 8px;
+
+    transition: filter 0.15s;
 }
 
 .logo #text {
     display: flex;
     flex-direction: column;
+    white-space: nowrap;
 }
 
 .logo #subtitle {
@@ -33,6 +36,10 @@
 .logo #title {
     font-family: 'Libre Baskerville', serif;
     font-size: 28px;
+}
+
+.logo:hover #picture {
+    filter: drop-shadow(0 0 3px #ffe59f93)
 }
 
 /* Dark Theme Overrides */
