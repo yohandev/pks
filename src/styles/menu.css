@@ -6,6 +6,9 @@
 
 .menu #container > * {
     padding: 10px calc(max(5px, min(20px, 1.5vw)));
+
+    color: var(--foreground);
+    text-decoration: none;
     font-size: 18px;
 
     transition: color 0.15s ease;
@@ -14,10 +17,6 @@
 
 .menu #container > *:hover {
     color: var(--highlight);
-}
-
-.menu #container > a:active {
-    text-decoration: underline;
 }
 
 .menu #toggle,

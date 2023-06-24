@@ -341,6 +341,11 @@ portfinder@^1.0.28:
     debug "^3.2.7"
     mkdirp "^0.5.6"
 
+preact-router@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/preact-router/-/preact-router-4.1.1.tgz#06e7fab0896e22406f98fc997b1faadbfed06369"
+  integrity sha512-+LGrB3b2nR7+8vzyHw8i2/TjZazs3oMJovIEgBChPBXMDSISmwj2WDynZh8KDxZRK2GuXlqHPk15mMjaYWZH4g==
+
 preact@^10.15.0:
   version "10.15.0"
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.15.0.tgz#14bae0afe3547ca9d45d22fda2a4266462d31cf3"

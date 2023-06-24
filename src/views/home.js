@@ -1,6 +1,3 @@
-import { Logo } from "../components/logo";
-import { Menu } from "../components/menu";
-
 import "../styles/home.css";
 
 /**
@@ -9,15 +6,6 @@ import "../styles/home.css";
 export function Home() {
     return (
         <div class="home">
-            <div id="nav-bar">
-                <Logo id="logo"/>
-                <Menu id="menu">
-                    <a>brothers</a>
-                    <a>gallery</a>
-                    <a>contact</a>
-                    <a>summer housing</a>
-                </Menu>
-            </div>
             <div id="banner"/>
         </div>
     );

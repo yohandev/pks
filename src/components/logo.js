@@ -5,12 +5,12 @@ import "../styles/logo.css";
  */
 export function Logo(props) {
     return (
-        <div class="logo" {...props}>
+        <a class="logo" {...props}>
             <div id="picture"/>
             <div id="text" class="no-select">
                 <span id="subtitle">MIT Alpha Mu Chapter</span>
                 <span id="title">Phi Kappa Sigma</span>
             </div>
-        </div>
+        </a>
     );
 }

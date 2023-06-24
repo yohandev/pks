@@ -5,6 +5,8 @@
     --foreground: #161616;
     --background: #ece8df;
     --highlight: #d3a422;
+
+    --location: "/";
 }
 
 /* Dark Theme Overrides */
