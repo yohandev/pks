@@ -16,6 +16,13 @@
     }
 }
 
+/* Mobile Overrides */
+@media (max-width: 800px) {
+    html, body {
+        font-size: 80%;
+    }
+}
+
 html, body {
     color: var(--foreground);
     background: var(--background);
