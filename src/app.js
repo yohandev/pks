@@ -21,7 +21,7 @@ function Main() {
         <>
             <NavBar/>
             <Router>
-                <Home path="/"/>
+                <Home path="/" default/>
                 <Brothers path="/brothers"/>
             </Router>
         </>

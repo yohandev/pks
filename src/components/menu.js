@@ -1,3 +1,5 @@
+import { useRef, useEffect } from 'preact/hooks';
+
 import "../styles/menu.css";
 
 /**
@@ -12,9 +14,24 @@ import "../styles/menu.css";
  * ```
  */
 export function Menu({ children, ...props }) {
+    const hamburger = useRef();
+    useEffect(() => {
+        // Hide the menu whenever any link is pressed.
+        document.addEventListener("click", ({ target, bubbles }) => {
+            do {
+                if (target?.localName !== "a") {
+                    continue;
+                }
+                if (hamburger.current?.checked) {
+                    hamburger.current.checked = false;
+                }
+            } while ((target = target.parentNode));
+        });
+    }, []);
+
     return (
         <div class="menu no-select" {...props}>
-            <input id="toggle" type="checkbox"/>
+            <input id="toggle" type="checkbox" ref={hamburger}/>
             <label id="hamburger" for="toggle">
                 <i class="fa-solid fa-bars fa-2xl" id="icon"></i>
             </label>
