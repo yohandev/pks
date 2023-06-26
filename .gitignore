@@ -4,3 +4,4 @@ node_modules/
 
 www/*
 !www/index.html
+!www/assets
