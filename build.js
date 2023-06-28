@@ -1,4 +1,7 @@
 const esbuild = require("esbuild");
+const http = require("node:http");
+const proc = require("node:child_process");
+
 const prod = !process.argv.includes("--watch");
 const opt = {
     // Bundle
@@ -31,6 +34,29 @@ const opt = {
     const { host, port } = await ctx.serve({
         servedir: "www",
     });
+    const proxy = http.createServer((req, res) => {
+        // Intercept API calls
+        // It's an easy hack to emulate what Scripts does on Athena
+        if (req.url.startsWith("/api/")) {
+            proc.execFile("./www" + req.url, (_, stdout) => {
+                res.socket.end(stdout);
+            });
+            return;
+        }
 
-    console.log(`Serving: http://${host}:${port}`);
+        // Pipe the request to esbuild
+        req.pipe(http.request({
+            hostname: host,
+            port: port,
+            path: req.url,
+            method: req.method,
+            headers: req.headers,
+        }, (res2) => {
+            res.writeHead(res2.statusCode, res2.headers);
+            res2.pipe(res, { end: true });
+        }));
+    });
+    proxy.listen(3000);
+
+    console.log(`Serving: http://${host}:3000`);
 })();
