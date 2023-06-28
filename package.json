@@ -8,7 +8,8 @@
   "scripts": {
     "build": "node build.js",
     "watch": "node build.js --watch",
-    "serve": "yarn watch & http-server www"
+    "serve": "yarn watch & http-server www",
+    "install": "node build.js && find ./www/api -type f -iname \"*.cgi\" -exec chmod +x {} \\;"
   },
   "devDependencies": {
     "esbuild": "^0.17.19",

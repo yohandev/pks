@@ -3,5 +3,7 @@
 node_modules/
 
 www/*
+www/api/gdrive-private-key.json
 !www/index.html
 !www/assets
+!www/api
