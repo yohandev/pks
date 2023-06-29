@@ -16,6 +16,8 @@
     "http-server": "^14.1.1"
   },
   "dependencies": {
+    "google-auth-library": "^8.8.0",
+    "googleapis": "^120.0.0",
     "preact": "^10.15.0",
     "preact-router": "^4.1.1"
   }

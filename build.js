@@ -38,7 +38,10 @@ const opt = {
         // Intercept API calls
         // It's an easy hack to emulate what Scripts does on Athena
         if (req.url.startsWith("/api/")) {
-            proc.execFile("./www" + req.url, (_, stdout) => {
+            proc.execFile("./www" + req.url, (_, stdout, stderr) => {
+                if (stderr) {
+                    console.error(stderr);
+                }
                 res.socket.end(stdout);
             });
             return;
