@@ -7,7 +7,7 @@ import Router from "preact-router";
 import "./styles/app.css";
 
 // Hot-reloading
-if (!PROD) {
+if (HOT_RELOAD) {
     new EventSource('/esbuild')
         .addEventListener('change', () => location.reload());
 }

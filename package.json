@@ -6,19 +6,22 @@
   "author": "Yohan Guyomard <yohang@mit.edu>",
   "license": "MIT",
   "scripts": {
-    "build": "node build.js",
-    "watch": "node build.js --watch",
-    "serve": "yarn watch & http-server www",
-    "install": "node build.js && find ./www/api -type f -iname \"*.cgi\" -exec chmod +x {} \\;"
+    "build": "yarn && node build.js && find ./www/api -type f -iname \"*.cgi\" -exec chmod +x {} \\;",
+    "serve": "yarn build && node build.js --serve",
+    "deploy2": "yarn build && read -p \"Athena Username: \" username && scp -r ./www $username@athena.dialup.mit.edu:/afs/athena.mit.edu/org/p/phikaps-web/website && ssh $username@athena.dialup.mit.edu \"cd /afs/athena.mit.edu/org/p/phikaps-web/website && find ./www/api -type f -iname \"*.cgi\" -exec chmod +x {} \\;\"",
+    "deploy": "yarn build && read -p \"Athena Username: \" username && scp -r ./www/* $username@athena.dialup.mit.edu:/afs/athena.mit.edu/org/p/phikaps-web/website"
   },
   "devDependencies": {
     "esbuild": "^0.17.19",
+    "express": "^4.18.2",
+    "express-http-proxy": "^1.6.3",
     "http-server": "^14.1.1"
   },
   "dependencies": {
+    "@googleapis/drive": "^6.0.0",
     "google-auth-library": "^8.8.0",
-    "googleapis": "^120.0.0",
     "preact": "^10.15.0",
-    "preact-router": "^4.1.1"
+    "preact-router": "^4.1.1",
+    "tiny-glob": "^0.2.9"
   }
 }

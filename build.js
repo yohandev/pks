@@ -1,65 +1,83 @@
 const esbuild = require("esbuild");
-const http = require("node:http");
+const express = require("express");
+const proxy = require("express-http-proxy");
+const glob = require("tiny-glob");
 const proc = require("node:child_process");
 
-const prod = !process.argv.includes("--watch");
 const opt = {
-    // Bundle
-    entryPoints: ["src/app.js"],
-    bundle: true,
-    minify: true,
-    sourcemap: true,
-    outfile: "www/app.js",
-    external: ["assets/*"],
-
-    // Preact
-    jsxFactory: "h",
-    jsxFragment: "Fragment",
-    jsxImportSource: "preact",
-    jsx: "automatic",
-    loader: {
-        ".js": "jsx",
-    },
-
-    // Defines
-    define: { PROD: prod.toString() },
+    serve: process.argv.includes("--serve"),
 };
 
-(async () => {
-    if (prod) {
-        return await esbuild.build(opt);
+(async function() {
+    const ui = await esbuild.context({
+        // Bundle
+        entryPoints: ["src/app.js"],
+        outfile: "www/app.js",
+        bundle: true,
+        minify: true,
+        sourcemap: true,
+        external: ["assets/*"],
+
+        // Preact
+        jsxFactory: "h",
+        jsxFragment: "Fragment",
+        jsxImportSource: "preact",
+        jsx: "automatic",
+        loader: {
+            ".js": "jsx",
+        },
+
+        // Defines
+        define: {
+            HOT_RELOAD: opt["serve"].toString(),
+        },
+    });
+    const api = await esbuild.context({
+        // Bundle
+        entryPoints: await glob("src/api/*.js"),
+        outdir: "www/api",
+        bundle: true,
+        minify: true,
+        platform: "node",
+        target: ["node10.19.0"],
+        
+        
+        // Exectutable
+        banner: {
+            "js": "#!/usr/bin/env node"
+        },
+        outExtension: {
+            ".js": ".cgi"
+        },
+
+        // Defines
+        define: {
+            ATHENA_BUILD: (!opt["serve"]).toString(),
+        },
+    });
+
+    // Build once
+    if (!opt["serve"]) {
+        await Promise.all([ui.rebuild(), api.rebuild()]);
+        await Promise.all([ui.dispose(), api.dispose()]);
+        return;
     }
-    const ctx = await esbuild.context(opt);
-    await ctx.watch();
-    const { host, port } = await ctx.serve({
+    // Serve
+    await Promise.all([ui.watch(), api.watch()]);
+    const { host, port } = await ui.serve({
         servedir: "www",
     });
-    const proxy = http.createServer((req, res) => {
-        // Intercept API calls
-        // It's an easy hack to emulate what Scripts does on Athena
-        if (req.url.startsWith("/api/")) {
-            proc.execFile("./www" + req.url, (_, stdout, stderr) => {
-                if (stderr) {
-                    console.error(stderr);
-                }
+    express()
+        .use("/api/*", (req, res) => {
+            proc.execFile("./www" + req.baseUrl, (_, stdout, stderr) => {
+                console.error(stderr);
                 res.socket.end(stdout);
             });
-            return;
-        }
+        })
+        .use("*", proxy(`${host}:${port}`, {
+            proxyReqPathResolver: (req) => req.baseUrl
+        }))
+        .listen(8000);
 
-        // Pipe the request to esbuild
-        req.pipe(http.request({
-            hostname: host,
-            port: port,
-            path: req.url,
-            method: req.method,
-            headers: req.headers,
-        }, (res2) => {
-            res.writeHead(res2.statusCode, res2.headers);
-            res2.pipe(res, { end: true });
-        }));
-    });
-    proxy.listen(3000);
-
-    console.log(`Serving: http://${host}:3000`);
+    console.log("[🔥] Development server listening at http://localhost:8000");
 })();

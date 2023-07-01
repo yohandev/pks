@@ -1,8 +1,9 @@
-#!/usr/bin/env node
+import "./polyfill";
 
-const { GoogleAuth } = require("google-auth-library");
-const { google } = require("googleapis");
-const { join } = require("node:path");
+import { GoogleAuth } from "google-auth-library";
+import { drive } from "@googleapis/drive";
+
+import credentials from "./gdrive-private-key.json";
 
 const GDRIVE_FOLDER_ID = "1Np0Jw9hibzNLNcaRL5fuJBFSxIlSHYP7";   // ID of the folder on Drive(from share link)
 const NUM_YEARS = 4;                                            // Number of class years to display
@@ -13,9 +14,9 @@ const GDRIVE_IMAGE_URL = (id) => (                              // Direct link t
 
 const auth = new GoogleAuth({
     scopes: "https://www.googleapis.com/auth/drive",
-    keyFile: join(__dirname, "gdrive-private-key.json"),
+    credentials,
 });
-const service = google.drive({ version: "v3", auth });
+const service = drive({ version: "v3", auth });
 
 (async () => {
     // (1) Search the `Website/Brothers` folder for subfolders, ie. 2025, 2026, etc.
@@ -40,7 +41,9 @@ const service = google.drive({ version: "v3", auth });
         })))
     ));
     
-    console.log("HTTP/1.1 200 OK");
+    if (!ATHENA_BUILD) {
+        console.log("HTTP/1.1 200 OK");
+    }
     console.log("Content-Type: application/json\n");
     console.log(JSON.stringify(pictures.flat()));
 })();

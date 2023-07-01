@@ -2,8 +2,8 @@
 
 node_modules/
 
+src/api/gdrive-private-key.json
+
 www/*
-www/api/gdrive-private-key.json
 !www/index.html
 !www/assets
-!www/api

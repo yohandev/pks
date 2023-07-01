@@ -1,0 +1,9 @@
+.brothers {
+    display: flex;
+    flex-direction: row;
+}
+
+.brothers .brother {
+    display: flex;
+    flex-direction: column;
+}

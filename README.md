@@ -36,6 +36,14 @@ The website automatically displays the data stored on [Google Drive](https://dri
     - You may need to run `npm i` if you added dependencies
 6. The website should update instantly once you reload!
 
+## Debugging Remotely
+Sometimes the website will work locally but not on Athena. Depending on what's wrong, it's most likely something along the lines of permissions issue(e.g. visibility) or Node being outdated on Scripts(nothing you can do about that but add polyfills). Either way, it's useful to run the API files(.cgi) on the website itself.
+1. `ssh <your kerb>@athena.dialup.mit.edu`
+2. `ssh phikaps-web@scripts`
+3. `ssh scripts-f30.mit.edu`
+4. `cd skullhouse2`
+5. Now you can run files and see their output, e.g. `./api/brothers.cgi` 
+
 ## Mobile App
 The website also comes with a mobile app for brothers. It sends push notifications for jobs and is otherwise more practical than the website. That being said, the app *is* the website, so any changes made there will be reflected without needing an update. If it does need to be updated, here are the instructions:
 
