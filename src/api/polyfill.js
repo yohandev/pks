@@ -1,4 +1,8 @@
 /**
+ * Note: this file is NOT an API endpoint
+ */
+
+/**
  * Array.flat() polyfill
  * Adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat#reduce_concat_isArray_recursivity
  */

@@ -4,27 +4,27 @@
 import "./polyfill";
 
 import { GoogleAuth } from "google-auth-library";
-import { drive } from "@googleapis/drive";
+import { drive, drive_v3 } from "@googleapis/drive";
 
 import credentials from "./gdrive-private-key.json";
-
-/**
- * ID for the "Website" Google Drive folder, which can be obtained from
- * its share link. Ensure that the folder is shared with the service account
- * in "gdrive-private-key.json", or publicly available.
- */
-const GDRIVE_FOLDER_ID = "1Np0Jw9hibzNLNcaRL5fuJBFSxIlSHYP7";
 
 const auth = new GoogleAuth({
     scopes: "https://www.googleapis.com/auth/drive",
     credentials,
 });
+/** @type {drive_v3.Drive} */
 const service = drive({ version: "v3", auth });
 
-export const FileType = {
-    Any: "",
-    Folder: "application/vnd.google-apps.folder",
-};
+export class FileType {
+    static Folder = new FileType("mimeType = 'application/vnd.google-apps.folder'");
+    static Image = new FileType("mimeType contains 'image/'");
+    static Video = new FileType("mimeType contains 'video/'");
+    static All = new FileType("");
+
+    constructor(filter) {
+        this.filter = filter;
+    }
+}
 
 /**
  * Get the direct-download link for a gDrive item with `id`
@@ -33,10 +33,24 @@ export function downloadLink(id) {
     return `https://drive.google.com/uc?id=${id}&export=download`;
 }
 
-export async function globFiles(parent, type) {
-    let query = `parents in "${parent}"`;
-    if (type) {
-        query += `and mimeType = "${type}"`
+/**
+ * List files within the folder `parent`
+ * 
+ * @param {string} parent ID of the parent folder, retrievable from its shared link
+ * @param {FileType|FileType[]|undefined} type Filters the type of files
+ * @param {drive_v3.Params$Resource$Files$List} params
+ */
+export async function globFiles(parent, type, params) {
+    let q = `parents in "${parent}" `;
+    if (type instanceof FileType && type !== FileType.All) {
+        // Filter one type
+        q += `and ${type.filter}`
+    } else if (Array.isArray(type)) {
+        // Filter a collection of types
+        q += "and " + type.join(" or ")
     }
-
+    return service.files
+        .list({ ...params, q })
+        .then((res) => res.data.files)
+        .then((files) => files.map((f) => ({ name: f.name, id: f.id })));
 }
