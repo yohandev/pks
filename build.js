@@ -41,7 +41,6 @@ const opt = {
         platform: "node",
         target: ["node10.19.0"],
         
-        
         // Exectutable
         banner: {
             "js": "#!/usr/bin/env node"
@@ -74,6 +73,10 @@ const opt = {
                 res.socket.end(stdout);
             });
         })
+        .use("/brothers", express.static("www/"))
+        .use("/gallery", express.static("www/"))
+        .use("/summer-housing", express.static("www/"))
+        .use("/contact", express.static("www/"))
         .use("*", proxy(`${host}:${port}`, {
             proxyReqPathResolver: (req) => req.baseUrl
         }))

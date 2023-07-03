@@ -1,9 +1,61 @@
-.brothers {
+.composite {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.composite #picture {
+    width: 6rem;
+    height: 8rem;
+
+    object-fit: cover;
+}
+
+.composite #name {
+    font-size: 0.5rem;
+}
+
+.composite-row {
     display: flex;
     flex-direction: row;
 }
 
-.brothers .brother {
+.brothers {
     display: flex;
     flex-direction: column;
+    align-items: center;
+
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.brothers #middle {
+    display: flex;
+    flex-direction: row;
+}
+
+.brothers #middle #title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: 0 4rem;
+}
+
+.brothers #middle #title #name {
+    font-size: 3rem;
+}
+
+.brothers #bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    width: 100%;
+}
+
+.brothers #slums {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
