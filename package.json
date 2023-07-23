@@ -8,8 +8,9 @@
   "scripts": {
     "build": "yarn && node build.js && find ./www/api -type f -iname \"*.cgi\" -exec chmod +x {} \\;",
     "serve": "yarn build && node build.js --serve",
-    "deploy2": "yarn build && read -p \"Athena Username: \" username && scp -r ./www $username@athena.dialup.mit.edu:/afs/athena.mit.edu/org/p/phikaps-web/website && ssh $username@athena.dialup.mit.edu \"cd /afs/athena.mit.edu/org/p/phikaps-web/website && find ./www/api -type f -iname \"*.cgi\" -exec chmod +x {} \\;\"",
-    "deploy": "yarn build && read -p \"Athena Username: \" username && scp -r ./www/* $username@athena.dialup.mit.edu:/afs/athena.mit.edu/org/p/phikaps-web/website"
+    "deployOld2": "yarn build && read -p \"Athena Username: \" username && scp -r ./www $username@athena.dialup.mit.edu:/afs/athena.mit.edu/org/p/phikaps-web/website && ssh $username@athena.dialup.mit.edu \"cd /afs/athena.mit.edu/org/p/phikaps-web/website && find ./www/api -type f -iname \"*.cgi\" -exec chmod +x {} \\;\"",
+    "deployOld": "yarn build && read -p 'Athena Username: ' username && scp -r ./www/* $username@athena.dialup.mit.edu:/afs/athena.mit.edu/org/p/phikaps-web/website",
+    "deploy": "yarn build && read -p 'Athena Username: ' username && rsync -avr --exclude 'assets/drive/*' ./www/* $username@athena.dialup.mit.edu:/afs/athena.mit.edu/org/p/phikaps-web/website"
   },
   "devDependencies": {
     "esbuild": "^0.17.19",

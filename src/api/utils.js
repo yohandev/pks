@@ -5,8 +5,7 @@ import "./polyfill";
 
 import { GoogleAuth } from "google-auth-library";
 import { drive, drive_v3 } from "@googleapis/drive";
-import { createWriteStream, existsSync } from "node:fs";
-import { mkdir } from "node:fs/promises";
+import { createWriteStream, existsSync, mkdirSync } from "node:fs";
 import { join, relative } from "node:path";
 
 import credentials from "./gdrive-private-key.json";
@@ -73,7 +72,7 @@ export async function downloadFile(id) {
     };
 
     // Create directory
-    await mkdir(DOWNLOAD_DIRECTORY, { recursive: true });
+    mkdirSync(DOWNLOAD_DIRECTORY, { recursive: true });
 
     // Start download stream from gDrive
     const res = await service.files.get(
