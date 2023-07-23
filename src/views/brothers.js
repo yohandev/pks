@@ -20,12 +20,12 @@ export function Brothers() {
                 // happen.
                 <div class="brothers">
                     <div id="top">
-                        <CompositeRow length={5} brothers={brothers} counter={counter}/>
+                        <CompositeRow length={6} brothers={brothers} counter={counter}/>
                     </div>
                     <div id="middle">
                         <div id="left">
-                            <CompositeRow length={2} brothers={brothers} counter={counter}/>
-                            <CompositeRow length={2} brothers={brothers} counter={counter}/>
+                            <CompositeRow length={3} brothers={brothers} counter={counter}/>
+                            <CompositeRow length={3} brothers={brothers} counter={counter}/>
                         </div>
                         <div id="title">
                             <span id="name">Phi Kappa Sigma</span>
@@ -33,18 +33,18 @@ export function Brothers() {
                             <span id="university">Massachusetts Institute of Technology</span>
                         </div>
                         <div id="right">
-                            <CompositeRow length={2} brothers={brothers} counter={counter}/>
-                            <CompositeRow length={2} brothers={brothers} counter={counter}/>
+                            <CompositeRow length={3} brothers={brothers} counter={counter}/>
+                            <CompositeRow length={3} brothers={brothers} counter={counter}/>
                         </div>
                     </div>
                     <div id="bottom">
-                        <CompositeRow length={3} brothers={brothers} counter={counter}/>
-                        <CompositeRow length={3} brothers={brothers} counter={counter}/>
+                        <CompositeRow length={4} brothers={brothers} counter={counter}/>
+                        <CompositeRow length={4} brothers={brothers} counter={counter}/>
                     </div>
                     <div id="slums">
                         {/* Populate 0-N rows at the bottom with the remaining brothers */}
-                        {Array(Math.ceil((brothers.length - counter.i) / 8)).fill().map((_) => (
-                            <CompositeRow length={8} brothers={brothers} counter={counter}/>
+                        {Array(Math.ceil((brothers.length - counter.i) / 9)).fill().map((_) => (
+                            <CompositeRow length={9} brothers={brothers} counter={counter}/>
                         ))}
                     </div>
                 </div>

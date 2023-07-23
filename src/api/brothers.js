@@ -1,6 +1,6 @@
 import "./polyfill";
 
-import { globFiles, downloadLink, FileType } from "./utils";
+import { globFiles, downloadLink, FileType, downloadFile } from "./utils";
 
 /**
  * ID for the "Website/Brothers" Google Drive folder, which can be obtained from
@@ -17,14 +17,14 @@ const GDRIVE_FOLDER_ID = "1Np0Jw9hibzNLNcaRL5fuJBFSxIlSHYP7";
     const pictures = await Promise.all(years.map((folder) => globFiles(folder.id, FileType.Image)));
 
     // (3) Reverse the years(ie. seniors first, freshmen last), flatten the result, and compute image links
-    const pictureLinks = pictures
+    const pictureLinks = await Promise.all(pictures
         .reverse()
         .flat()
-        .map((file) => ({
-            name: file.name,                // Name of the file corresponds to the person's name
-            picture: downloadLink(file.id), // Turns out that download links only need the ID
-        }));
-
+        .map(async (file) => ({
+            name: file.name,                        // Name of the file corresponds to the person's name
+            picture: await downloadFile(file.id),   // Put the image files on the server
+        })));
+    
     // (4) Output the HTTP packet
     if (!ATHENA_BUILD) {
         console.log("HTTP/1.1 200 OK");
