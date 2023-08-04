@@ -1,0 +1,22 @@
+# Pass authorization headers to node.js
+RewriteCond %{HTTP:Authorization} ^(.+)
+RewriteRule ^(.*)$ $1 [E=HTTP_AUTHORIZATION:%1,PT]
+
+# Put the public API in the same realm as internal so that endpoints like /whoami.cgi
+# work (otherwise browser doesn't send credentials).
+AuthName "Private"
+AuthType Basic
+AuthUserFile /afs/athena.mit.edu/org/p/phikaps-web/website/api/.htpasswd
+
+## PUBLIC ENDPOINTS ##
+<Files "whoami.cgi">
+Require all granted
+</Files>
+<Files "brothers.cgi">
+Require all granted
+</Files>
+
+## PRIVATE ENDPOINTS ##
+<Files "login.cgi">
+Require valid-user
+</Files>

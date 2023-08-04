@@ -2,9 +2,18 @@
 
 node_modules/
 
+# Private keys
 src/api/gdrive-private-key.json
 
+# Build directory
 www/*
-www/assets/drive
+!www/*/
+
 !www/index.html
+!www/.htaccess
+
+www/api/*
+!www/api/.htaccess
+
+www/assets/drive
 !www/assets

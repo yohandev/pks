@@ -34,7 +34,7 @@ const opt = {
     });
     const api = await esbuild.context({
         // Bundle
-        entryPoints: await glob("src/api/*.js"),
+        entryPoints: await glob("src/api/**/*.js"),
         outdir: "www/api",
         bundle: true,
         minify: true,

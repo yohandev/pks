@@ -11,18 +11,31 @@ import { useState, useEffect } from "preact/hooks";
  *  )}
  * </Fetch>
  * ```
+ * @param {string} url
+ * @param {boolean} json
+ * @param {boolean} text
+ * @param {boolean} retry
+ * @param {RequestInit} options
  */
-export function Fetch({ url, json, children, ...props }) {
+export function Fetch({ url, json, text, retry, options, children, ...props }) {
     const [response, setResponse] = useState(null);
 
-    useEffect(() => {
+    useEffect(function retry() {
         setResponse(null);
-        fetch(url)
-            .then((res) => json ? res.json() : res)
-            .then((res) => setResponse(res));
+
+        fetch(url, options)
+            .then((res) => {
+                if (!res.ok) {
+                    throw "retry";
+                }
+                return res;
+            })
+            .then((res) => json ? res.json() : text ? res.text() : res)
+            .then((res) => setResponse(res))
+            .catch(() => (retry && retry()))
     }, [url]);
 
     return response ? children(response) : (
-        <p>🕰️ Loading...</p>
+        <p {...props}>🕰️ Loading...</p>
     );
 }
