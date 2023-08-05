@@ -1,3 +1,4 @@
+/** PUBLIC MENU **/
 /* Default Layout */
 .menu #container {
     display: flex;
@@ -89,4 +90,50 @@
     .menu #toggle:checked ~ #container > * {
         opacity: 1;
     }
+}
+
+/** INTERNAL MENU **/
+.internal-menu {
+    display: flex;
+    flex-direction: row;
+
+    background: var(--midground);
+
+    /* Occupy the full-width despite margin of html, body */
+    width: 100%;
+    padding: 0 10px 0 20px;
+    margin: 0 0 0 -20px;
+
+    flex-wrap: wrap;
+}
+
+.internal-menu > * {
+    width: 2em;
+    height: 1.35em;
+    margin: 10px 2px;
+
+    border: var(--background) 3px solid;
+    border-radius: 5px;
+    
+    background: var(--midground);
+    color: var(--foreground);
+
+    font-family: 'Ysabeau SC', sans-serif;
+    font-size: 24px;
+    
+    text-decoration: none;
+    text-align: center;
+    vertical-align: middle;
+    text-transform: uppercase;
+
+    transition: color 0.15s ease;
+    cursor: pointer;
+}
+
+.internal-menu > *:hover {
+    color: var(--highlight);
+}
+
+.internal-menu > .material-symbols-rounded {
+    line-height: 1.35em;
 }

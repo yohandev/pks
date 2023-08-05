@@ -1,4 +1,3 @@
-import { Fetch } from "../components/fetch";
 import "../styles/home.css";
 
 /**
@@ -16,11 +15,6 @@ export function Home() {
     return (
         <div class="home">
             <div id="banner"/>
-            <Fetch url="/api/whoami.cgi" text options={{ credentials: "include" }}>
-                {(res) => (
-                    res.trim() == "brother" ? <>Brother!</> : <>Who is u?</>
-                )}
-            </Fetch>
             <span onClick={login}>
                 Are you a PhiKap?
             </span>

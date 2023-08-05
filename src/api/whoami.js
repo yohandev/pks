@@ -6,4 +6,4 @@ if (!ATHENA_BUILD) {
     console.log("HTTP/1.1 200 OK");
 }
 console.log("Content-Type: text/plain\n");
-console.log(process.env.HTTP_AUTHORIZATION ? "brother" : "normy");
+console.log((process.env.HTTP_AUTHORIZATION || !ATHENA_BUILD) ? "brother" : "normy");

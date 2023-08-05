@@ -1,9 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Playfair+Display&display=swap");
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@600&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Ysabeau+SC:wght@500;600&display=swap');
 
 /* Light Theme Defaults */
 :root {
     --foreground: #161616;
     --background: #ece8df;
+    --midground: #f4efe1;
     --highlight: #d3a422;
 
     --location: "/";
@@ -14,6 +17,7 @@
     :root {
         --foreground: white;
         --background: #161616;
+        --midground: rgb(26, 26, 27);
         --highlight: #ffe59f;
     }
 }
