@@ -11,11 +11,13 @@ import { useState, useEffect } from "preact/hooks";
  *  )}
  * </Fetch>
  * ```
- * @param {string} url
- * @param {boolean} json
- * @param {boolean} text
- * @param {boolean} retry
- * @param {RequestInit} options
+ * @param {{
+ *  url: string;
+ *  json: boolean;
+ *  text: boolean;
+ *  retry: boolean;
+ *  options: RequestInit;
+ * }} props
  */
 export function Fetch({ url, json, text, retry, options, children, ...props }) {
     const [response, setResponse] = useState(null);

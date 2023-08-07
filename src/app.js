@@ -5,6 +5,7 @@ import { NavBar } from "./components/nav";
 import Router from "preact-router";
 
 import "./styles/app.css";
+import { Rho } from "./views/rho";
 
 // Hot-reloading
 if (HOT_RELOAD) {
@@ -21,8 +22,12 @@ function Main() {
         <>
             <NavBar/>
             <Router>
+                {/* Public Pages */}
                 <Home path="/" default/>
                 <Brothers path="/brothers"/>
+                
+                {/* Internal Pages */}
+                <Rho path="/rho"/>
             </Router>
         </>
     );
