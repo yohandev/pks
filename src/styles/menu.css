@@ -96,21 +96,21 @@
 .internal-menu {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
 
     background: var(--midground);
 
     /* Occupy the full-width despite margin of html, body */
     width: 100%;
-    padding: 0 10px 0 20px;
-    margin: 0 0 0 -20px;
-
-    flex-wrap: wrap;
+    padding: 8px 10px 8px 20px;
+    margin: 0 0 10px -20px;
 }
 
 .internal-menu > * {
     width: 2em;
     height: 1.35em;
-    margin: 10px 2px;
+    margin: 2px 2px;
 
     border: var(--background) 3px solid;
     border-radius: 5px;
