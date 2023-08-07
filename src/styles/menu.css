@@ -126,12 +126,14 @@
     vertical-align: middle;
     text-transform: uppercase;
 
-    transition: color 0.15s ease;
+    transition: color 0.15s ease, box-shadow 0.25s ease-in;
     cursor: pointer;
 }
 
 .internal-menu > *:hover {
     color: var(--highlight);
+    box-shadow: 0 0 3px var(--highlight);
+    /* filter: drop-shadow(0 0 3px #ffe59f93) */
 }
 
 .internal-menu > .material-symbols-rounded {
