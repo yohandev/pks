@@ -78,6 +78,7 @@ const opt = {
         .use("/summer-housing", express.static("www/"))
         .use("/contact", express.static("www/"))
         .use("/rho", express.static("www/"))
+        .use("/settings", express.static("www/"))
         .use("*", proxy(`${host}:${port}`, {
             proxyReqPathResolver: (req) => req.baseUrl
         }))

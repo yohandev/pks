@@ -1,4 +1,5 @@
 import { RusheeCard } from "../components/rushee";
+import { ACTIVES } from "../data/actives";
 
 import "../styles/rho.css";
 
@@ -10,19 +11,22 @@ import "../styles/rho.css";
 export function Rho() {
     return (
         <div class="rho-container">
-            <RusheeCard photo="https://i.imgur.com/VShn15G.jpg" level={10} name="Matt S."/>
-            <RusheeCard photo="https://i.imgur.com/fcsaEgz.jpg" level={10} name="Nick D."/>
-            <RusheeCard photo="https://imgur.com/3SChj5E.jpg" level={8} name="Will R."/>
-            <RusheeCard photo="https://imgur.com/AfcMZU0.jpg" level={4} name="Chris H."/>
-            <RusheeCard photo="https://imgur.com/AfcMZU0.jpg" level={4} name="Chris H."/>
-            <RusheeCard photo="https://imgur.com/AfcMZU0.jpg" level={4} name="Chris H."/>
-            <RusheeCard photo="https://imgur.com/AfcMZU0.jpg" level={4} name="Chris H."/>
-            <RusheeCard photo="https://imgur.com/AfcMZU0.jpg" level={4} name="Chris H."/>
-            <RusheeCard photo="https://imgur.com/AfcMZU0.jpg" level={4} name="Chris H."/>
-            <RusheeCard photo="https://imgur.com/AfcMZU0.jpg" level={4} name="Chris H."/>
-            <RusheeCard photo="https://imgur.com/AfcMZU0.jpg" level={4} name="Chris H."/>
-            <RusheeCard photo="https://i.imgur.com/gC6QAle.jpg" level={3} name="Ellington Hemphill"/>
-            <RusheeCard photo="https://i.imgur.com/rbE3Nmb.png" level={1} name="Rushil"/>
+            
+            <div id="cards-container">
+                <RusheeCard photo="https://i.imgur.com/VShn15G.jpg" level={10} name="Matt S."/>
+                <RusheeCard photo="https://i.imgur.com/fcsaEgz.jpg" level={10} name="Nick D."/>
+                <RusheeCard photo="https://imgur.com/3SChj5E.jpg" level={8} name="Will R."/>
+                <RusheeCard photo="https://imgur.com/AfcMZU0.jpg" level={4} name="Chris H."/>
+                <RusheeCard photo="https://imgur.com/AfcMZU0.jpg" level={4} name="Chris H."/>
+                <RusheeCard photo="https://imgur.com/AfcMZU0.jpg" level={4} name="Chris H."/>
+                <RusheeCard photo="https://imgur.com/AfcMZU0.jpg" level={4} name="Chris H."/>
+                <RusheeCard photo="https://imgur.com/AfcMZU0.jpg" level={4} name="Chris H."/>
+                <RusheeCard photo="https://imgur.com/AfcMZU0.jpg" level={4} name="Chris H."/>
+                <RusheeCard photo="https://imgur.com/AfcMZU0.jpg" level={4} name="Chris H."/>
+                <RusheeCard photo="https://imgur.com/AfcMZU0.jpg" level={4} name="Chris H."/>
+                <RusheeCard photo="https://i.imgur.com/gC6QAle.jpg" level={3} name="Ellington Hemphill"/>
+                <RusheeCard photo="https://i.imgur.com/rbE3Nmb.png" level={1} name="Rushil"/>
+            </div>
         </div>
     );
 }

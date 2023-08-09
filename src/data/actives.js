@@ -1,0 +1,45 @@
+// Use this file to maintain a list of kerbs for actives.
+// I couldn't find an easy way to authenticate only brothers so for now we have this :P
+export const ACTIVES = [
+    // 26s
+    "pstaylor",
+    "adls",
+    "elijahj",
+    "ccolon",
+    "cgreq114",
+    "klogan",
+    "msmith26",
+    "nduran04",
+    // 25s
+    "thbigler",
+    "yohang",
+    "ayana",
+    "leeban",
+    "joseb073",
+    "dbarros",
+    "zoro",
+    "jmulero",
+    "atanon",
+    "xavier23",
+    "franc105",
+    "acevedo",
+    "maysonet",
+    // 24s
+    "mimorris",
+    "wokolo",
+    "aseblu",
+    "tomaylla",
+    // 23s
+    // "jacobshp",
+    // "jvila",
+    // "bshep23",
+    // "gradyt",
+    // "sarenas",
+    // "mtulla",
+    // "gcampos1",
+    // "arcgomez",
+    // "smonel",
+    // "nagomezg",
+    // "smahadeo",
+    // "gcaamano",
+];

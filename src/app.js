@@ -6,6 +6,7 @@ import Router from "preact-router";
 
 import "./styles/app.css";
 import { Rho } from "./views/rho";
+import { Settings } from "./views/settings";
 
 // Hot-reloading
 if (HOT_RELOAD) {
@@ -28,6 +29,7 @@ function Main() {
                 
                 {/* Internal Pages */}
                 <Rho path="/rho"/>
+                <Settings path="/settings"/>
             </Router>
         </>
     );

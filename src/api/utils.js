@@ -8,7 +8,7 @@ import { drive, drive_v3 } from "@googleapis/drive";
 import { createWriteStream, existsSync, mkdirSync } from "node:fs";
 import { join, relative } from "node:path";
 
-import credentials from "./gdrive-private-key.json";
+import credentials from "../data/gdrive-private-key.json";
 
 const auth = new GoogleAuth({
     scopes: "https://www.googleapis.com/auth/drive",

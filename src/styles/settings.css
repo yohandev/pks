@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Tangerine:wght@700&display=swap');
+
+.settings {
+    padding: 5px 25px;
+}
+
+.settings #kerb-label {
+    font-family: 'Tangerine', cursive;
+    font-size: xx-large;
+}
