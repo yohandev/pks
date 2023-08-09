@@ -29,7 +29,11 @@ export function RusheeCard({ name, level, photo, ...props }) {
         case 10:
             return ["legendary", 9];
     }})();
+    // Modify name to first name + last initial
+    const [firstName, lastName] = name.split(" ");
+
     return (
+        <div class="rushee-card-container">
         <div class="rushee-card" rarity={rarity}>
             <div id="glow"/>
             <div id="photo" style={`background-image: url("${photo}")`}/>
@@ -37,9 +41,10 @@ export function RusheeCard({ name, level, photo, ...props }) {
             <div id="elixir">
                 {elixir}
             </div>
-            <div id="name">
-                {name}
+            <div id="name" style={`font-size: ${6 / Math.max(firstName.length, 6)}em`}>
+                {firstName} {lastName ? `${lastName[0]}.` : ""}
             </div>
+        </div>
         </div>
     );
 }
