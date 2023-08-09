@@ -1,4 +1,4 @@
-import "../styles/rushee.css";
+import "../../styles/rushee.css";
 
 /**
  * Component for a card about a rushee. Level is a number from 1..=10 where 1 is unlikely to

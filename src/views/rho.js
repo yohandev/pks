@@ -1,5 +1,4 @@
-import { RusheeCard } from "../components/rushee";
-import { ACTIVES } from "../data/actives";
+import { RusheeCard } from "../components/rho/rushee";
 
 import "../styles/rho.css";
 
@@ -11,7 +10,7 @@ import "../styles/rho.css";
 export function Rho() {
     return (
         <div class="rho-container">
-            
+            <button class="clash-button" id="add-rushee">Add Rushee</button>
             <div id="cards-container">
                 <RusheeCard photo="https://i.imgur.com/VShn15G.jpg" level={10} name="Matt S."/>
                 <RusheeCard photo="https://i.imgur.com/fcsaEgz.jpg" level={10} name="Nick D."/>

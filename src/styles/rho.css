@@ -18,3 +18,73 @@
     justify-content: center;
     gap: 40px 20px;
 }
+
+/* Makes a button look like it's from Clash Royale using (abusing) pseudo elements */
+.clash-button {
+    appearance: none;
+    -webkit-appearance: none;
+
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+
+    background: red;
+    border: ridge 0.1em rgba(255, 255, 255, 0.135);
+    border-bottom: none;
+    border-radius: 0.25em;
+    box-shadow: 0 0.2em 0 rgb(181, 7, 7);
+
+    padding: 0.5em 1em;
+
+    color: white;
+    font-family: "Supercell";
+    text-shadow: -1px 1px 0 #000,
+				1px 1px 0 #000,
+				1px -1px 0 #000,
+                -1px -1px 0 #000,
+                0px 2px 0 #000;
+
+    transition: 0.25s ease transform, 0.5s ease filter;
+}
+
+.clash-button:hover {
+    transform: scale(0.975);
+    filter: brightness(1.05);
+}
+
+/* Highlight in top-half */
+.clash-button::after {
+    content: "";
+    z-index: 2;
+    
+    position: absolute;
+    top: 0.075em;
+    left: 0.075em;
+
+    width: calc(100% - 0.15em);
+    height: 50%;
+
+    background: rgba(255, 255, 255, 0.135);
+    border-radius: 0.15em;
+}
+
+/* Black outline over everything */
+.clash-button::before {
+    content: "";
+    z-index: 0;
+
+    position: absolute;
+    top: -0.1em;
+    left: -0.1em;
+
+    width: calc(100% + 0.2em);
+    height: calc(100% + 0.1em + 0.2em);
+
+    border-radius: 0.25em;
+    outline: 0.1em solid black;
+}
+
+.rho-container #add-rushee {
+    background: rgb(69, 81, 123);
+    box-shadow: 0 0.2em 0 rgb(39, 39, 69);
+}
