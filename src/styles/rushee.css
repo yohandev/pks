@@ -1,6 +1,6 @@
 @font-face {
     font-family: "Supercell";
-    src: url("assets/clash_font.ttf");
+    src: url("assets/rho/font.ttf");
 }
 
 .rushee-card-container {
@@ -53,13 +53,13 @@
 .rushee-card[rarity="common"] #photo,
 .rushee-card[rarity="rare"] #photo,
 .rushee-card[rarity="epic"] #photo {
-    -webkit-mask-image: url("assets/rushee_mask_normal.png");
-    mask-image: url("assets/rushee_mask_normal.png");
+    -webkit-mask-image: url("assets/rho/mask_normal.png");
+    mask-image: url("assets/rho/mask_normal.png");
 }
 
 .rushee-card[rarity="legendary"] #photo {
-    -webkit-mask-image: url("assets/rushee_mask_legendary.png");
-    mask-image: url("assets/rushee_mask_legendary.png");
+    -webkit-mask-image: url("assets/rho/mask_legendary.png");
+    mask-image: url("assets/rho/mask_legendary.png");
 }
 
 .rushee-card #overlay {
@@ -81,11 +81,11 @@
 .rushee-card[rarity="common"] #overlay,
 .rushee-card[rarity="rare"] #overlay,
 .rushee-card[rarity="epic"] #overlay {
-    background-image: url("assets/rushee_normal.png");
+    background-image: url("assets/rho/frame_normal.png");
 }
 
 .rushee-card[rarity="legendary"] #overlay {
-    background-image: url("assets/rushee_legendary.png");
+    background-image: url("assets/rho/frame_legendary.png");
 
     max-height: 110%;
     height: 110%;
@@ -110,11 +110,11 @@
 .rushee-card[rarity="common"] #glow,
 .rushee-card[rarity="rare"] #glow,
 .rushee-card[rarity="epic"] #glow {
-    background-image: url("assets/rushee_mask_normal.png");
+    background-image: url("assets/rho/mask_normal.png");
 }
 
 .rushee-card[rarity="legendary"] #glow {
-    background-image: url("assets/rushee_mask_legendary.png");
+    background-image: url("assets/rho/mask_legendary.png");
 }
 
 .rushee-card[rarity="common"] #glow {
@@ -160,7 +160,7 @@
     justify-content: center;
     align-items: center;
 
-    background: url("assets/rushee_elixir.png");
+    background: url("assets/rho/elixir.png");
     background-size: contain;
     background-repeat: no-repeat;
     

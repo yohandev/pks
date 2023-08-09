@@ -31,6 +31,6 @@ export function Rho() {
  * Component for the view about a single rushee. It looks like a clash royale
  * page because... LMFAO
  */
-export function Rushee() {
+export function Rushee({ name, level, photo, hometown, major, phone, contacts,  }) {
     
 }

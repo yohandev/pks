@@ -11,7 +11,7 @@
     padding: 25px;
     gap: 40px 20px;
 
-    background: url("assets/rho_background.png"), var(--background);
+    background: url("assets/rho/background.png"), var(--background);
     background-size: 200px 200px;
     background-repeat: repeat repeat;
     background-blend-mode: overlay;
