@@ -1,7 +1,4 @@
-@font-face {
-    font-family: "Supercell";
-    src: url("assets/rho/font.ttf");
-}
+@import url("./clash.css");
 
 .rushee-card-container {
     display: block;
@@ -204,4 +201,8 @@
 				1px -1px 0 #000,
                 -1px -1px 0 #000,
                 0px 2px 0 #000;
+}
+
+.rushee-info {
+    
 }

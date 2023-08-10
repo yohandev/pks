@@ -2,7 +2,7 @@ import { render } from "preact";
 import { Home } from "./views/home";
 import { Brothers } from "./views/brothers";
 import { NavBar } from "./components/nav";
-import Router from "preact-router";
+import { Router } from "preact-router";
 
 import "./styles/app.css";
 import { Rho } from "./views/rho";
@@ -28,7 +28,7 @@ function Main() {
                 <Brothers path="/brothers"/>
                 
                 {/* Internal Pages */}
-                <Rho path="/rho"/>
+                <Rho path="/rho/:rest*"/>
                 <Settings path="/settings"/>
             </Router>
         </>
