@@ -1,6 +1,7 @@
 import { Router } from "preact-router";
 import { RusheeCard } from "../components/rho/card";
-import { RusheeInfo } from "../components/rho/rushee";
+import { RusheeInfo, RUSHEES } from "../components/rho/rushee";
+import { Fetch } from "../components/fetch";
 
 import "../styles/rho/rho.css";
 
@@ -13,9 +14,9 @@ export function Rho() {
     return (
         <div class="rho-container">
             <button class="cr-button">Add Rushee</button>
-            <button class="cr-button green">Invite to S&L</button>
+            <RusheeGrid/>
             <Router>
-                <RusheeGrid path="/rho"/>
+                <div path="/rho" default/>
                 <RusheeInfo path="/rho/i/:id"/>
             </Router>
         </div>
@@ -26,28 +27,16 @@ export function Rho() {
  * Component for a list of rushees
  */
 function RusheeGrid() {
-    const RUSHEES = [
-        { photo: "https://i.imgur.com/VShn15G.jpg", level: 10, name: "Matt S." },
-        { photo: "https://i.imgur.com/fcsaEgz.jpg", level: 10, name: "Nick D." },
-        { photo: "https://imgur.com/3SChj5E.jpg", level: 8, name: "Will R." },
-        { photo: "https://imgur.com/AfcMZU0.jpg", level: 4, name: "Chris H." },
-        { photo: "https://imgur.com/AfcMZU0.jpg", level: 4, name: "Chris H." },
-        { photo: "https://imgur.com/AfcMZU0.jpg", level: 4, name: "Chris H." },
-        { photo: "https://imgur.com/AfcMZU0.jpg", level: 4, name: "Chris H." },
-        { photo: "https://imgur.com/AfcMZU0.jpg", level: 4, name: "Chris H." },
-        { photo: "https://imgur.com/AfcMZU0.jpg", level: 4, name: "Chris H." },
-        { photo: "https://imgur.com/AfcMZU0.jpg", level: 4, name: "Chris H." },
-        { photo: "https://imgur.com/AfcMZU0.jpg", level: 4, name: "Chris H." },
-        { photo: "https://i.imgur.com/gC6QAle.jpg", level: 3, name: "Ellington Hemphill" },
-        { photo: "https://i.imgur.com/rbE3Nmb.png", level: 1, name: "Rushil" },
-    ];
+
     return (
         <div id="cards-container">
-            {RUSHEES.map((rushee, i) => (
-                <a href={`/rho/i/${i}`}>
-                    <RusheeCard {...rushee}/>
-                </a>
-            ))}
+            <Fetch url="/api/rushee.cgi" json>
+                {(rushees) => rushees.map((rushee) => (
+                    <a href={`/rho/i/${rushee.id}`}>
+                        <RusheeCard {...rushee}/>
+                    </a>
+                ))}
+            </Fetch>
         </div>
     );
 }

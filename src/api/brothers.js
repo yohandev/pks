@@ -1,6 +1,6 @@
 import "./polyfill";
 
-import { globFiles, downloadLink, FileType, downloadFile } from "./utils";
+import { globFiles, FileType, downloadFile } from "./utils";
 
 /**
  * ID for the "Website/Brothers" Google Drive folder, which can be obtained from

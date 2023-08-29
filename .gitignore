@@ -4,6 +4,7 @@ node_modules/
 
 # Private keys
 src/data/gdrive-private-key.json
+src/data/sql-private-key.txt
 
 # Build directory
 www/*

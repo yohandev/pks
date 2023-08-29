@@ -60,3 +60,16 @@
 .cr-button.green {
     filter: hue-rotate(67deg) saturate(110%) brightness(0.9);
 }
+
+.cr-button.red {
+    background: #FC4144;
+    box-shadow:
+        0 0 3px 0 #FC4144,
+        0 0 0 4px #E72424,
+        0 1px 0 4px #E72424,
+        0 -1px 2px 4px #FE4A5D,
+        0 -2px 0 5px #EC8A95,
+        0 6px 0 4px #9C1414,
+        0 3px 0 5px #9C1414;
+    color: #fff;
+}

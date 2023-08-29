@@ -20,3 +20,6 @@ Require all granted
 <Files "login.cgi">
 Require valid-user
 </Files>
+<Files "rushee.cgi">
+Require valid-user
+</Files>

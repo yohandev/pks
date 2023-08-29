@@ -60,6 +60,8 @@ For iOS: TODO(yohang).
 What happens when the same server is used for decades to host several revisions of the same website, amongst other random stuff, is truly wondrous... Basically the whole thing works via [Scripts](https://scripts.mit.edu) which provides a `PHP` interpreter over a file system. In other words:
 - Files in `phikaps-web/web_scripts/` are accessible at [phikaps-web.scripts.mit.edu](phikaps-web.scripts.mit.edu)
 - Some files are interpreted instead of served as-is, e.g. `.php`, `.py` files
+- SQL login info is in `phikaps-web/.sql/my.cnf`
+    - The one we use is `phikaps-web+website`
 
 But how comes...
 - I can access the website at [skullhouse.mit.edu](skullhouse.mit.edu)?

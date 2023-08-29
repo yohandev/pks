@@ -1,6 +1,7 @@
 const esbuild = require("esbuild");
 const express = require("express");
 const proxy = require("express-http-proxy");
+const bodyParser = require("body-parser");
 const glob = require("tiny-glob");
 const proc = require("node:child_process");
 
@@ -37,7 +38,7 @@ const opt = {
         entryPoints: await glob("src/api/**/*.js"),
         outdir: "www/api",
         bundle: true,
-        minify: true,
+        minify: false,
         platform: "node",
         target: ["node10.19.0"],
         
@@ -67,21 +68,34 @@ const opt = {
         servedir: "www",
     });
     express()
+        .use("/esbuild", proxy(`${host}:${port}`, {
+            proxyReqPathResolver: (req) => req.baseUrl
+        }))
+        .use(bodyParser.raw({
+            type: ["application/x-www-form-urlencoded", "application/json"]
+        }))
         .use("/api/*", (req, res) => {
-            proc.execFile("./www" + req.baseUrl, (_, stdout, stderr) => {
+            const env = {
+                ...process.env,
+                "QUERY_STRING": req.url.substring(1 + req.url.indexOf("?")),
+                "REQUEST_METHOD": req.method,
+            };
+            const exe = proc.execFile("./www" + req.baseUrl, { env }, (_, stdout, stderr) => {
                 console.error(stderr);
                 res.socket.end(stdout);
             });
+            exe.stdin.end(req.body instanceof Buffer ? req.body : undefined);
         })
-        .use("/brothers", express.static("www/"))
-        .use("/gallery", express.static("www/"))
-        .use("/summer-housing", express.static("www/"))
-        .use("/contact", express.static("www/"))
-        .use("/rho", express.static("www/"))
-        .use("/settings", express.static("www/"))
-        .use("*", proxy(`${host}:${port}`, {
-            proxyReqPathResolver: (req) => req.baseUrl
-        }))
+        .use([
+            "/brothers",
+            "/gallery",
+            "/contact",
+            "/housing",
+            "/rho/i/:id",
+            "/rho",
+            "/settings",
+            "/"
+        ], express.static("www/"))
         .listen(8000);
 
     console.log("[🔥] Development server listening at http://localhost:8000");
