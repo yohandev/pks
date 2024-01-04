@@ -1,8 +1,0 @@
-.home #banner {
-    width: 100%;
-    height: calc(max(120px, min(200px, 30vh)));
-
-    background: url("assets/streetview.jpg");
-    background-size: cover;
-    background-position: center;
-}
