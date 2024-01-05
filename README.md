@@ -20,15 +20,31 @@ This is the public + internal website for MIT's Alpha Mu chapter of Phi Kappa Si
 
 *visible only to logged-in brothers
 
-## This Branch
-Reimplement everything in [Dioxus](https://dioxuslabs.com), which should make mobile compatibility easier. Also, MIT's Athena network (which I used before) really sucks.
+## Usage
 
-# Running
-1. Install Rust
-2. Install Dioxus CLI (`cargo install dioxus-cli`)
-3. Build Dioxus project (`dx build --features web --release`)
-4. Run project (`cargo run --features ssr --release`)
+```bash
+$ npm install # or pnpm install or yarn install
+```
 
-Alternative, with hot-reload:
-3. Build debug version of Dioxus project `dx build --features web`
-4. Run project (`dx serve --features ssr --hot-reload --platform desktop`)
+### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
+
+## Available Scripts
+
+In the project directory, you can run:
+
+### `npm run dev`
+
+Runs the app in the development mode.<br>
+Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
+
+### `npm run build`
+
+Builds the app for production to the `dist` folder.<br>
+It correctly bundles Solid in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.<br>
+Your app is ready to be deployed!
+
+## Deployment
+
+Learn more about deploying your application with the [documentations](https://vitejs.dev/guide/static-deploy.html)
