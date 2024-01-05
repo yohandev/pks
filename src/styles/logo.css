@@ -1,0 +1,27 @@
+.logo-container {
+    height: 5.5em;
+    padding: 1em;
+}
+
+.logo-container h1 {
+    font-size: 1.8em;
+}
+
+.logo-container h2 {
+    font-size: 0.8em;
+}
+
+.logo-container h1,
+.logo-container h2 {
+    margin: 0;
+}
+
+.logo-container:hover * {
+    color: whitesmoke;
+}
+
+.logo {
+    height: 100%;
+    padding: 0 1em;
+    transform: translateY(-25%);
+}
