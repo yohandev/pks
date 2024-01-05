@@ -24,12 +24,13 @@ h1 {
 
 a {
     text-decoration: none;
+    font-weight: 600;
     cursor: pointer;
     color: inherit;
 }
 
 a:hover {
-    color: #ffe59f93;
+    color: #ffe59f;
 }
 
 .hover\:glow {
@@ -49,4 +50,8 @@ a:hover {
 .flex\:column {
     display: flex;
     flex-direction: column;
+}
+
+.flex\:align-center {
+    align-items: center;
 }

@@ -1,6 +1,7 @@
-import { createSignal } from 'solid-js';
+import { createSignal } from "solid-js";
 
-import Logo from './logo';
+import NavigationBar from "./navigation";
+import banner from "../assets/streetview.jpg";
 
 import "../styles/home.css";
 
@@ -9,10 +10,13 @@ function Home() {
 
     return (
         <>
-            <a href="/">
-                <Logo />
-            </a>
-            <h1>MIT Skullhouse</h1>
+            <NavigationBar>
+                <a>Hello</a>
+                <a>World</a>
+                <a>Foo</a>
+                <a>Bar</a>
+            </NavigationBar>
+            <div class="banner" />
             <div class="card">
                 <button onClick={() => setCount((x) => x + 1)}>
                     count is {count()}

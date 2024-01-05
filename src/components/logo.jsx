@@ -4,7 +4,7 @@ import "../styles/logo.css";
 
 function Logo() {
     return (
-        <div class="logo-container flex:row hover:glow">
+        <div class="logo-container flex:row flex:align-center hover:glow">
             <img src={logo} class="logo" alt="Skullhouse Logo" />
             <div class="flex:column">
                 <h2>
