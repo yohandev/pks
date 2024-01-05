@@ -22,3 +22,13 @@ This is the public + internal website for MIT's Alpha Mu chapter of Phi Kappa Si
 
 ## This Branch
 Reimplement everything in [Dioxus](https://dioxuslabs.com), which should make mobile compatibility easier. Also, MIT's Athena network (which I used before) really sucks.
+
+# Running
+1. Install Rust
+2. Install Dioxus CLI (`cargo install dioxus-cli`)
+3. Build Dioxus project (`dx build --features web --release`)
+4. Run project (`cargo run --features ssr --release`)
+
+Alternative, with hot-reload:
+3. Build debug version of Dioxus project `dx build --features web`
+4. Run project (`dx serve --features ssr --hot-reload --platform desktop`)
