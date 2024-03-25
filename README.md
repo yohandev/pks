@@ -37,6 +37,9 @@ Builds the app for production to the `dist` folder. The build is minified and th
 
 ## Deployment
 
+Make a PR to this repository and its changes should automatically be published once approved!
+
+Alternatively...
 ```bash
 yarn global add firebase-tools
 firebase login # Use phikaps.am.mit@gmail.com
