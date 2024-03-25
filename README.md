@@ -23,15 +23,15 @@ This is the public + internal website for MIT's Alpha Mu chapter of Phi Kappa Si
 ## Usage
 
 ```bash
-$ yarn install # or npm install
+$ yarn install
 ```
 
-### `npm run dev`
+### `yarn run dev`
 
 Runs the app in the development mode.<br>
 Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
 
-### `npm run build`
+### `yarn run build`
 
 Builds the app for production to the `dist` folder. The build is minified and the filenames include the hashes.
 
