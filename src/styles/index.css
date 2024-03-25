@@ -22,6 +22,10 @@ h1 {
     font-family: Libre Baskerville, Times, serif;
 }
 
+p {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
 a {
     text-decoration: none;
     font-weight: 600;
@@ -54,4 +58,14 @@ a:hover {
 
 .flex\:align-center {
     align-items: center;
+}
+
+.content {
+    margin: 40px 100px;
+}
+
+@media (max-width: 900px) {
+    .content {
+        margin: 20px;
+    }
 }

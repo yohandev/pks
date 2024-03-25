@@ -5,6 +5,7 @@
 .logo-container h1 {
     font-size: 1.8em;
     text-wrap: nowrap;
+    white-space: nowrap;
 }
 
 .logo-container h2 {
