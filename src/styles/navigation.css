@@ -1,0 +1,10 @@
+.navigation-bar {
+    justify-content: space-between;
+    padding: 1.5em;
+}
+
+@media (max-width: 800px) {
+    .navigation-bar {
+        padding: 1.5em 1.25em;
+    }
+}

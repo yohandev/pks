@@ -20,52 +20,28 @@ This is the public + internal website for MIT's Alpha Mu chapter of Phi Kappa Si
 
 *visible only to logged-in brothers
 
-## Running locally
-1. Make sure you have `node` and `yarn`(or `npm`) installed
-2. Clone this repository
-3. Run `yarn run serve`(or the `npm` equivalent)
+## Usage
 
-## Updating the Website
-The website automatically displays the data stored on [Google Drive](https://drive.google.com/drive/folders/1Ii4pBOw8l2jdVzGyGnBEyjXS7iMiTF-h?usp=sharing). Otherwise...
-1. Clone this repository and make whatever edits you need.
-2. Send a pull-request for your changes to the [remote](https://github.com/yohandev/pks). If you need to make urgent changes, you could just change the repo directly on Athena(see below) but it's easier to just wait.
-3. Accessing Athena: `ssh <your kerb>@athena.dialup.mit.edu`
-4. Locating the website: `cd /afs/athena.mit.edu/org/p/phikaps-web/website`
-    - Note: The locker is a mess. See "Athena Locker" section for details.
-5. Pull your changes(`git pull`) and rebuild(+ run some commands to setup other stuff) the website(`npm run install`)
-    - You may need to run `npm i` if you added dependencies
-6. The website should update instantly once you reload!
+```bash
+$ yarn install # or npm install
+```
 
-## Debugging Remotely
-Sometimes the website will work locally but not on Athena. Depending on what's wrong, it's most likely something along the lines of permissions issue(e.g. visibility) or Node being outdated on Scripts(nothing you can do about that but add polyfills). Either way, it's useful to run the API files(.cgi) on the website itself.
-1. `ssh <your kerb>@athena.dialup.mit.edu`
-2. `ssh phikaps-web@scripts`
-3. `ssh scripts-f30.mit.edu`
-4. `cd skullhouse2`
-5. Now you can run files and see their output, e.g. `./api/brothers.cgi` 
+### `npm run dev`
 
-## Mobile App
-The website also comes with a mobile app for brothers. It sends push notifications for jobs and is otherwise more practical than the website. That being said, the app *is* the website, so any changes made there will be reflected without needing an update. If it does need to be updated, here are the instructions:
+Runs the app in the development mode.<br>
+Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
 
+### `npm run build`
 
-For Android: use the Chi gmail(phikaps.am.mit@gmail.com) to publish on Google Play.
+Builds the app for production to the `dist` folder. The build is minified and the filenames include the hashes.
 
-For iOS: TODO(yohang).
+## Deployment
 
-## Technical Overview
-- Frontend: `Preact`
-- Backend: `Google Sheets`(yes, really) and very simple `python3`(see "Athena Locker")
+Make a PR to this repository and its changes should automatically be published once approved!
 
-## Athena Locker
-What happens when the same server is used for decades to host several revisions of the same website, amongst other random stuff, is truly wondrous... Basically the whole thing works via [Scripts](https://scripts.mit.edu) which provides a `PHP` interpreter over a file system. In other words:
-- Files in `phikaps-web/web_scripts/` are accessible at [phikaps-web.scripts.mit.edu](phikaps-web.scripts.mit.edu)
-- Some files are interpreted instead of served as-is, e.g. `.php`, `.py` files
-- SQL login info is in `phikaps-web/.sql/my.cnf`
-    - The one we use is `phikaps-web+website`
-
-But how comes...
-- I can access the website at [skullhouse.mit.edu](skullhouse.mit.edu)?
-    - [Scripts hostnames](https://scripts.mit.edu/faq/14)
-- The repository, and consequently its build folder(`phikaps-web/website/www/`) isn't in `phikaps-web/web_scripts/`?
-    - I have a symlink in `phikaps-web/web_scripts/skullhouse2`
-    - Hopefully this separates legacy stuff from what is being used now. As for when this website inevitably becomes obsolete, well...
+Alternatively...
+```bash
+yarn global add firebase-tools
+firebase login # Use phikaps.am.mit@gmail.com
+firebase deploy
+```

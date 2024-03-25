@@ -1,30 +1,22 @@
 {
-  "name": "skullhouse.mit.edu",
-  "version": "1.0.0",
-  "description": "Website(public + internal) for MIT's Alpha Mu chapter of Phi Kappa Sigma(Skullhouse)",
-  "main": "index.js",
-  "author": "Yohan Guyomard <yohang@mit.edu>",
-  "license": "MIT",
+  "name": "my-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "build": "yarn && node build.js && find ./www/api -type f -iname \"*.cgi\" -exec chmod +x {} \\;",
-    "serve": "yarn build && node build.js --serve",
-    "deployOld2": "yarn build && read -p \"Athena Username: \" username && scp -r ./www $username@athena.dialup.mit.edu:/afs/athena.mit.edu/org/p/phikaps-web/website && ssh $username@athena.dialup.mit.edu \"cd /afs/athena.mit.edu/org/p/phikaps-web/website && find ./www/api -type f -iname \"*.cgi\" -exec chmod +x {} \\;\"",
-    "deployOld": "yarn build && read -p 'Athena Username: ' username && scp -r ./www/* $username@athena.dialup.mit.edu:/afs/athena.mit.edu/org/p/phikaps-web/website",
-    "deploy": "yarn build && read -p 'Athena Username: ' username && rsync -avr --exclude 'assets/drive/*' ./www/* $username@athena.dialup.mit.edu:/afs/athena.mit.edu/org/p/phikaps-web/website"
-  },
-  "devDependencies": {
-    "body-parser": "^1.20.2",
-    "esbuild": "^0.17.19",
-    "express": "^4.18.2",
-    "express-http-proxy": "^1.6.3",
-    "http-server": "^14.1.1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@googleapis/drive": "^6.0.0",
-    "google-auth-library": "^8.8.0",
-    "mysql2": "^3.6.0",
-    "preact": "^10.15.0",
-    "preact-router": "^4.1.1",
-    "tiny-glob": "^0.2.9"
+    "@solidjs/router": "^0.10.10",
+    "firebase": "^10.9.0",
+    "flickity": "^3.0.0",
+    "solid-js": "^1.8.7",
+    "vanilla-tilt": "^1.8.1"
+  },
+  "devDependencies": {
+    "vite": "^5.0.8",
+    "vite-plugin-solid": "^2.8.0"
   }
 }

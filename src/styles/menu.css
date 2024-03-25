@@ -1,58 +1,28 @@
-/** PUBLIC MENU **/
-/* Default Layout */
-.menu #container {
+.menu-items {
     display: flex;
     flex-direction: row;
 }
 
-.menu #container > * {
+.menu-items > * {
     padding: 10px calc(max(5px, min(20px, 1.5vw)));
-
-    color: var(--foreground);
-    text-decoration: none;
     font-size: 18px;
-
-    transition: color 0.15s ease;
-    cursor: pointer;
 }
 
-.menu #container > *:hover {
-    color: var(--highlight);
-}
-
-.menu #toggle,
-.menu #hamburger {
+.menu-toggle,
+.menu-hamburger {
     display: none;
 }
 
-/* Hamburger Layout */
+/* Hamburger menu */
 @media (max-width: 800px) {
-    /* By default, the hamburger is display: none */
-    .menu #hamburger {
+    .menu-hamburger {
         display: initial;
     }
 
-    .menu #hamburger #icon {
-        color: var(--foreground);
-        cursor: pointer;
-
-        padding: 20px 0;
-        margin: 0 15px;
-
-        transition: transform 0.25s ease;
-    }
-
-    /* Hamburger when active */
-    .menu #toggle:checked ~ #hamburger #icon {
-        transform: rotate(90deg);
-    }
-
-    /* Changes the menu from row to column-fullscreen */
-    /* Hides the menu options unless hamburger is active */
-    .menu #container {
-        background: var(--background);
+    .menu-items {
+        background: #242424;
         overflow: hidden;
-        z-index: 999;
+        z-index: 100;
 
         display: flex;
         flex-direction: column;
@@ -62,81 +32,26 @@
         position: absolute;
         top: 0;
         left: 0;
-        margin-top: 5.5rem;
-
+        margin-top: 6.5em;
         width: 100%;
-        height: 0;
 
-        transition: height 0.5s ease;
-    }
-
-    /* Shows the menu when hamburger is active */
-    .menu #toggle:checked ~ #container {
-        height: 100%;
-    }
-
-    /* Hamburger is most likely mobile-first, so make menu options bigger */
-    .menu #container > * {
-        padding: 0.5em 10px;
-        font-size: x-large;
-
-        /* This is to undo the fullscreen #container offset(margin-top) */
-        transform: translateY(-5.5rem);
-
+        height: 0;                  /* Hide the menu by default */
         opacity: 0;
-        transition: opacity 0.15s ease-in 0.1s;
+
+        transition: height 500ms ease, opacity 650ms ease;
     }
 
-    /* Immediately showing the text on hamburger expand looks ugly; workaround: */
-    .menu #toggle:checked ~ #container > * {
+    .menu-items > * {               /* Change formatting of menu items (bigger) */
+        font-size: xx-large;
+        transform: translateY(-50%);
+    }
+
+    .menu-toggle:checked ~ .menu-items {
+        height: calc(100% - 6.5em); /* Show the menu when toggled */
         opacity: 1;
     }
-}
 
-/** INTERNAL MENU **/
-.internal-menu {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    background: var(--midground);
-
-    /* Occupy the full-width despite margin of html, body */
-    width: 100%;
-    padding: 8px 10px 8px 20px;
-    margin: 0 0 10px -20px;
-}
-
-.internal-menu > * {
-    width: 2em;
-    height: 1.35em;
-    margin: 2px 2px;
-
-    border: var(--background) 3px solid;
-    border-radius: 5px;
-    
-    background: var(--midground);
-    color: var(--foreground);
-
-    font-family: 'Ysabeau SC', sans-serif;
-    font-size: 24px;
-    
-    text-decoration: none;
-    text-align: center;
-    vertical-align: middle;
-    text-transform: uppercase;
-
-    transition: color 0.15s ease, box-shadow 0.25s ease-in;
-    cursor: pointer;
-}
-
-.internal-menu > *:hover {
-    color: var(--highlight);
-    box-shadow: 0 0 3px var(--highlight);
-    /* filter: drop-shadow(0 0 3px #ffe59f93) */
-}
-
-.internal-menu > .material-symbols-rounded {
-    line-height: 1.35em;
+    .menu-toggle:checked ~ .menu-hamburger-icon {
+        content: "X";
+    }
 }
