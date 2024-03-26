@@ -22,7 +22,7 @@ export function Auth({  }) {
 }
 
 function SignUpLink() {
-    reutrn (<p><a href="/login">Are you a PhiKap?</a></p>);
+    return (<p><a href="/login">Are you a PhiKap?</a></p>);
 }
 
 export function SignUp() {
