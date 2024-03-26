@@ -7,8 +7,8 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-const {onRequest} = require("firebase-functions/v2/https");
-const logger = require("firebase-functions/logger");
+// const {onRequest} = require("firebase-functions/v2/https");
+// const logger = require("firebase-functions/logger");
 
 // Create and deploy your first functions
 // https://firebase.google.com/docs/functions/get-started
@@ -17,3 +17,13 @@ const logger = require("firebase-functions/logger");
 //   logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");
 // });
+
+import { beforeUserCreated, HttpsError } from "firebase-functions/v2/identity";
+
+export const beforecreated = beforeUserCreated((event) => {
+    const email = event.data.email;
+
+    if (!email?.includes("@mit.edu")) {
+        throw new HttpsError('permission-denied', "Only active brothers can sign up!");
+    }
+});

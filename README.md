@@ -39,6 +39,9 @@ Builds the app for production to the `dist` folder. The build is minified and th
 
 Make a PR to this repository and its changes should automatically be published once approved!
 
+It will be live at the usual URL in addition to its "native" URL on Google Firebase's domain:
+[https://pks-website.web.app/](https://pks-website.web.app/)
+
 Alternatively...
 ```bash
 yarn global add firebase-tools

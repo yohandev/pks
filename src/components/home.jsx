@@ -1,11 +1,9 @@
-import Carousel from "./carousel";
-import Card from "./card";
-
 import image_party from "../assets/gallery/party_shark.jpeg";
 import image_road_trip from "../assets/gallery/road_trip_2025.jpeg";
 import image_rush from "../assets/gallery/steak_n_shake.jpeg";
 
 import "../styles/home.css";
+import { Auth } from "./auth";
 
 function Home() {
     return (
@@ -39,6 +37,7 @@ function Home() {
                     Dinner is served every school night at 6:15 sharp, made by our wonderful chef Gerry!
                 </Banner>
             </div>
+            <Auth />
         </>
     );
 }
