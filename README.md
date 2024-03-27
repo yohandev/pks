@@ -48,3 +48,11 @@ yarn global add firebase-tools
 firebase login # Use phikaps.am.mit@gmail.com
 firebase deploy
 ```
+
+## Troubleshooting
+
+In any case, the [Firebase Console](https://console.firebase.google.com/u/3/project/pks-website/authentication/users?consoleUI=FIREBASE) is your best bet. The login is the `phikaps.am.mit@gmail.com`.
+
+### Sign-Up doesn't work!
+
+In the backend, there's a cloud function (`./functions/index.js:beforecreated`) that only allows accounts associated with an active brother's kerberos to be created. It does this by invoking an API on Athena' server (`./athena/actives.cgi`) that checks the mailing lists; most likely, that endpoint is going wrong so start your investigations there (e.g. it was moved or Athena is slower than Firebase's 7 second timeout today, etc.).

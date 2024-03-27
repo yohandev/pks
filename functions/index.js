@@ -19,11 +19,37 @@
 // });
 
 import { beforeUserCreated, HttpsError } from "firebase-functions/v2/identity";
+import https from "https";
 
-export const beforecreated = beforeUserCreated((event) => {
-    const email = event.data.email;
+// Adapted from:
+// https://gist.github.com/ktheory/df3440b01d4b9d3197180d5254d7fb65
+const get = (url, data='') => new Promise((resolve, reject) => {
+    const req = https.request(url, res => {
+        const chunks = [];
 
-    if (!email?.includes("@mit.edu")) {
-        throw new HttpsError('permission-denied', "Only active brothers can sign up!");
+        res.on("data", chunk => chunks.push(chunk));
+        res.on("error", reject);
+        res.on("end", () => {
+            const { statusCode, headers } = res;
+            const body = chunks.join('');
+
+            if (statusCode >= 200 && statusCode <= 299) {
+                resolve({ statusCode, headers, body });
+            } else {
+                reject(new Error(`[${statusCode}] Request failed: ${body}`));
+            }
+        });
+    });
+    req.on("error", reject);
+    req.write(data, "binary");
+    req.end();
+});
+
+export const beforecreated = beforeUserCreated(async (event) => {
+    const [kerb, domain] = event.data.email.split("@");
+    const { body: kerbs } = await get("https://phikaps-web.scripts.mit.edu/skullhouse3/api/actives.cgi");
+
+    if (domain != "mit.edu" || !JSON.parse(kerbs).includes(kerb)) {
+        throw new HttpsError('invalid-argument', "Only active brothers can sign up!");
     }
 });
