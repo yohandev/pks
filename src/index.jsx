@@ -6,7 +6,6 @@ import { initializeApp } from "firebase/app";
 
 import Home from "./components/home";
 import NavigationBar from "./components/navigation";
-import { SignUp } from "./components/auth";
 
 import "./styles/index.css";
 
@@ -38,7 +37,6 @@ render(
         <FirebaseProvider app={app}>
             <Router root={App}>
                 <Route path="/" component={Home} />
-                <Route path="/login" component={SignUp} />
             </Router>
         </FirebaseProvider>
     ),

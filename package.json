@@ -13,6 +13,7 @@
     "firebase": "^10.9.0",
     "flickity": "^3.0.0",
     "solid-firebase": "^0.3.0",
+    "solid-icons": "^1.1.0",
     "solid-js": "^1.8.7",
     "vanilla-tilt": "^1.8.1"
   },

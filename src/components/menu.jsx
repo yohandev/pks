@@ -14,7 +14,15 @@ function Menu({ children }) {
                 {children}
             </div>
         </div>
-    )
+    );
+}
+
+export function InternalMenu({ children }) {
+    return (
+        <div class="internal-menu flex:row flex:justify-center flex:wrap">
+            {children}
+        </div>
+    );
 }
 
 export default Menu;

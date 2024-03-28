@@ -1,4 +1,5 @@
 @import "https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Playfair+Display&display=swap";
+@import "https://fonts.googleapis.com/css2?family=Ysabeau+SC:wght@500;600&display=swap";
 
 :root {
     font-family: Playfair Display, Times, serif;
@@ -6,7 +7,7 @@
     font-weight: 400;
 
     color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
+    background-color: rgb(22, 22, 22);
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -58,6 +59,14 @@ a:hover {
 
 .flex\:align-center {
     align-items: center;
+}
+
+.flex\:justify-center {
+    justify-content: center;
+}
+
+.flex\:wrap {
+    flex-wrap: wrap;
 }
 
 .content {
