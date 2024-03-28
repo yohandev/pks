@@ -10,9 +10,9 @@ function Menu({ children }) {
             <label id="hamburger" class="menu-hamburger" for="menu-toggle">
                 <span class="menu-hamburger-icon">🍔</span>
             </label>
-            <div class="menu-items">
+            <nav class="menu-items">
                 {children}
-            </div>
+            </nav>
         </div>
     );
 }
