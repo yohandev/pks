@@ -1,6 +1,9 @@
 import { createMemo } from "solid-js";
 
-import poster from "../../assets/rho/poster.jpg";
+import poster from "../../assets/rho/poster.png";
+import paper from "../../assets/rho/paper.jpg";
+import luffy from "../../assets/rho/luffy.jpeg";
+
 import "../../styles/poster.css";
 
 const FLUSHED_MESSAGE = [
@@ -30,6 +33,8 @@ function Poster({ name, wanted=true, width="200px" }) {
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
         >
+            <image href={luffy} x="80" y="265" width="720" height="520" preserveAspectRatio="xMinYMid slice"/>
+            <image href={paper} width="100%" height="100%" style="mix-blend-mode: lighten"/>
             <image href={poster} width="100%" height="100%"/>
             <text
                 class="wanted-poster-text"
@@ -52,17 +57,6 @@ function Poster({ name, wanted=true, width="200px" }) {
             >
                 DEAD&nbsp;&nbsp;OR&nbsp;&nbsp;ALIVE
             </text>
-            <text
-                class="wanted-poster-text"
-                y="1140"
-                transform="scale(0.75, 1)"
-                style="font-weight: 1000"
-            >
-                <tspan x="105" dy="1.2em">KONO SAKUHIN HA FICTION DETHUNODE JITSUZAISURU JINBUTSU DANTAI</tspan>
-                <tspan x="105" dy="1.2em">SONOTA NO SOSHIKI TO DOITSU NO MEISHOU GA GEKICHU NI TOUJYOU</tspan>
-                <tspan x="105" dy="1.2em">SHITATOSHITEMO JITSUZAI NA MONOTOHA ISSAI MUKANKEIDETH</tspan>
-            </text>
-
             <text
                 class="wanted-poster-text"
                 x="140"
