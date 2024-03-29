@@ -6,6 +6,7 @@ import { initializeApp } from "firebase/app";
 
 import Home from "./components/home";
 import NavigationBar from "./components/navigation";
+import Rho from "./components/rho";
 
 import "./styles/index.css";
 
@@ -37,6 +38,7 @@ render(
         <FirebaseProvider app={app}>
             <Router root={App}>
                 <Route path="/" component={Home} />
+                <Route path="/rho" component={Rho} />
             </Router>
         </FirebaseProvider>
     ),
