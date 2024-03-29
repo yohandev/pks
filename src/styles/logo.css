@@ -29,6 +29,14 @@
 
 @media (max-width: 800px) {
     .logo-container {
-        height: 3.5em;
+        height: 3em;
+    }
+
+    .logo-container h1 {
+        font-size: 1.5em;
+    }
+
+    .logo-container h2 {
+        font-size: 0.6em;
     }
 }
