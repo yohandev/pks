@@ -29,6 +29,7 @@ const app = initializeApp({
     authDomain: "pks-website.firebaseapp.com",
     projectId: "pks-website",
     storageBucket: "pks-website.appspot.com",
+    databaseURL: "https://pks-website-default-rtdb.firebaseio.com/",
     messagingSenderId: "368171466916",
     appId: "1:368171466916:web:81227e8d2c0dc79d70a631"
 });

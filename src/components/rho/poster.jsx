@@ -7,6 +7,7 @@ import luffy from "../../assets/rho/luffy.jpeg";
 import "../../styles/poster.css";
 
 const FLUSHED_MESSAGE = [
+    "FLUSHED",
     "NOT WANTED",
     "I'M GOOD",
     "NO THANKS",
@@ -18,7 +19,7 @@ const FLUSHED_MESSAGE = [
     "CABRÓN",
 ]
 
-function Poster({ name, wanted=true, width="200px" }) {
+function Poster({ name="Monkey D. Luffy", bounty=1000000000, wanted=true, width="200px", image=luffy }) {
     const wantedMessage = createMemo(() => (
         wanted ? "WANTED" : FLUSHED_MESSAGE[Math.floor(Math.random() * FLUSHED_MESSAGE.length)]
     ));
@@ -33,7 +34,7 @@ function Poster({ name, wanted=true, width="200px" }) {
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-            <image href={luffy} x="80" y="265" width="720" height="520" preserveAspectRatio="xMinYMid slice"/>
+            <image href={image} x="80" y="265" width="720" height="520" preserveAspectRatio="xMinYMid slice"/>
             <image href={paper} width="100%" height="100%" style="mix-blend-mode: lighten"/>
             <image href={poster} width="100%" height="100%"/>
             <text
@@ -44,7 +45,7 @@ function Poster({ name, wanted=true, width="200px" }) {
                 textLength="790"
                 transform="scale(1, 15)"
             >
-                WANTED
+                {wantedMessage}
             </text>
             <text
                 class="wanted-poster-text"
@@ -65,7 +66,7 @@ function Poster({ name, wanted=true, width="200px" }) {
                 style="font-weight: 900"
                 textAnchor="end"
             >
-                MARINE
+                SKULLS
             </text>
             <text
                 class="wanted-poster-text"
@@ -76,7 +77,7 @@ function Poster({ name, wanted=true, width="200px" }) {
                 transform="scale(1, 10)"
                 textAnchor="middle"
             >
-                MONKEY D. LUFFY
+                {name.toUpperCase()}
             </text>
             <text
                 class="wanted-poster-bounty"
@@ -86,7 +87,7 @@ function Poster({ name, wanted=true, width="200px" }) {
                 textLength="140"
                 transform="scale(4, 4)"
             >
-                1,000,000,000-
+                {bounty.toLocaleString()}-
             </text>
         </svg>
     );
