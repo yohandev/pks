@@ -1,4 +1,4 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithEmailLink, sendSignInLinkToEmail } from "firebase/auth";
 import { useAuth, useFirebaseApp } from "solid-firebase";
 import { Match, Show, Switch, createSignal } from "solid-js";
 
@@ -33,23 +33,32 @@ function SignIn() {
 
         const form = new FormData(e.target);
         const email = form.get("email").split("@")[0] + "@mit.edu";
-        const password = form.get("password");
+        // const password = form.get("password");
 
         const auth = getAuth(app);
-        createUserWithEmailAndPassword(auth, email, password)
+        const settings = {
+            url: "https://pks-website.web.app",
+            handleCodeInApp: true,
+        };
+        sendSignInLinkToEmail(auth, email, settings)
             .then(() => setLoading(false))
             .catch((e) => {
-                if (e.code !== "auth/email-already-in-use") {
-                    console.log(e.message);
-                    alert("You must be an active brother to create an account!");
+                console.log(e.message);
+            })
+        // createUserWithEmailAndPassword(auth, email, password)
+        //     .then(() => setLoading(false))
+        //     .catch((e) => {
+        //         if (e.code !== "auth/email-already-in-use") {
+        //             console.log(e.message);
+        //             alert("You must be an active brother to create an account!");
 
-                    setLoading(false);
-                    return;
-                }
-                signInWithEmailAndPassword(auth, email, password)
-                    .catch(alert)
-                    .finally(() => setLoading(false));
-            });
+        //             setLoading(false);
+        //             return;
+        //         }
+        //         signInWithEmailAndPassword(auth, email, password)
+        //             .catch(alert)
+        //             .finally(() => setLoading(false));
+        //     });
     };
 
     return (
@@ -63,13 +72,13 @@ function SignIn() {
                         placeholder="munch@mit.edu"
                         required
                     />
-                    <input
+                    {/* <input
                         type="password"
                         name="password"
                         placeholder="Password"
                         required=""
                         minlength="8"
-                    />
+                    /> */}
                     <button type="submit">Submit</button>
                 </form>
             </Show>
