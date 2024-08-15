@@ -1,6 +1,6 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithEmailLink, sendSignInLinkToEmail } from "firebase/auth";
+import { getAuth, signInWithEmailLink, sendSignInLinkToEmail, isSignInWithEmailLink } from "firebase/auth";
 import { useAuth, useFirebaseApp } from "solid-firebase";
-import { Match, Show, Switch, createSignal } from "solid-js";
+import { Match, Show, Switch, createEffect, createSignal } from "solid-js";
 
 export function Auth() {
     const app = useFirebaseApp();
@@ -23,64 +23,59 @@ export function Auth() {
 
 function SignIn() {
     const app = useFirebaseApp();
-    const [showForm, setShowForm] = createSignal(false);
     const [loading, setLoading] = createSignal(false);
 
-    const onFormSubmit = (e) => {
-        e.preventDefault();
+    function askForKerb() {
+        return window.prompt("Enter your kerb or MIT email").split("@")[0] + "@mit.edu";
+    }
 
-        setLoading(true);
-
-        const form = new FormData(e.target);
-        const email = form.get("email").split("@")[0] + "@mit.edu";
-        // const password = form.get("password");
-
+    // Send a sign-in email
+    function requestSignIn() {
         const auth = getAuth(app);
+        const email = askForKerb();
         const settings = {
-            url: "https://pks-website.web.app",
+            url: window.location.href,
             handleCodeInApp: true,
         };
-        sendSignInLinkToEmail(auth, email, settings)
-            .then(() => setLoading(false))
-            .catch((e) => {
-                console.log(e.message);
-            })
-        // createUserWithEmailAndPassword(auth, email, password)
-        //     .then(() => setLoading(false))
-        //     .catch((e) => {
-        //         if (e.code !== "auth/email-already-in-use") {
-        //             console.log(e.message);
-        //             alert("You must be an active brother to create an account!");
 
-        //             setLoading(false);
-        //             return;
-        //         }
-        //         signInWithEmailAndPassword(auth, email, password)
-        //             .catch(alert)
-        //             .finally(() => setLoading(false));
-        //     });
-    };
+        setLoading(true);
+        sendSignInLinkToEmail(auth, email, settings)
+            .then(() => {
+                // Save email to avoid asking again
+                window.localStorage.setItem("emailForSignIn", email);
+
+                alert(`Sent a sign-in email to ${email}!\nGive it a second and check your spam.`);
+            })
+            .catch((e) => {
+                alert(`An error occured: ${e.message}`);
+            })
+            .finally(() => setLoading(false));
+    }
+
+    // Actual sign-in logic
+    createEffect(() => {
+        const auth = getAuth(app);
+
+        if (!isSignInWithEmailLink(auth, window.location.href)) {
+            return;
+        }
+        
+        const email = window.localStorage.getItem("emailForSignIn") ?? askForKerb();
+        setLoading(true);
+        signInWithEmailLink(auth, email, window.location.href)
+            .then(() => {
+                window.localStorage.removeItem('emailForSignIn');
+            })
+            .catch((e) => {
+                alert(e.message);
+            })
+            .finally(() => setLoading(false));
+    });
 
     return (
         <>
-            <a onClick={() => setShowForm(true)}><p>Are you a PhiKap?</p></a>
-            <Show when={showForm() && !loading()}>
-                <form onSubmit={onFormSubmit} method="post" class="flex:column">
-                    <input
-                        name="email"
-                        type="email"
-                        placeholder="munch@mit.edu"
-                        required
-                    />
-                    {/* <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        required=""
-                        minlength="8"
-                    /> */}
-                    <button type="submit">Submit</button>
-                </form>
+            <Show when={!loading()}>
+                <a onClick={() => requestSignIn()}><p>Are you a PhiKap?</p></a>
             </Show>
             <Show when={loading()}>
                 Signing you in...
