@@ -1,8 +1,10 @@
 import { createMemo } from "solid-js";
+import { getDatabase, ref as refDb } from "firebase/database";
+import { getStorage, ref as refStorage } from "firebase/storage";
+import { useFirebaseApp, useDatabase, useDownloadURL } from "solid-firebase";
 
 import poster from "../../assets/rho/poster.png";
 import paper from "../../assets/rho/paper.jpg";
-import luffy from "../../assets/rho/luffy.jpeg";
 
 import "../../styles/poster.css";
 
@@ -19,9 +21,38 @@ const FLUSHED_MESSAGE = [
     "CABRÓN",
 ]
 
-function Poster({ name="Monkey D. Luffy", bounty=1000000000, wanted=true, width="200px", image=luffy }) {
+export function PosterDb({ id, ...props }) {
+    const app = useFirebaseApp();
+
+    const storage = getStorage(app);
+    const image = useDownloadURL(refStorage(storage, `rho/${id}.jpg`));
+    
+    const db = getDatabase(app);
+    const info = useDatabase(refDb(db, `/rho/people/${id}`));
+
+    return (
+        <Show when={info.data && image()}>
+            <Poster info={info.data} image={image()} {...props} />
+        </Show>
+    );
+}
+
+function Poster({ info, image, width="200px" }) {
+    const {
+        name,
+        flushed,
+        invitedToBoat,
+        invitedToSteakLobster,
+        invitedToBid,
+        notes,
+        phone,
+    } = info;
+
     const wantedMessage = createMemo(() => (
-        wanted ? "WANTED" : FLUSHED_MESSAGE[Math.floor(Math.random() * FLUSHED_MESSAGE.length)]
+        !flushed ? "WANTED" : FLUSHED_MESSAGE[Math.floor(Math.random() * FLUSHED_MESSAGE.length)]
+    ));
+    const bounty = createMemo(() => (
+        1000000000
     ));
     return (
         // Adapted from the PSD document found here:
@@ -45,7 +76,7 @@ function Poster({ name="Monkey D. Luffy", bounty=1000000000, wanted=true, width=
                 textLength="790"
                 transform="scale(1, 15)"
             >
-                {wantedMessage}
+                {wantedMessage()}
             </text>
             <text
                 class="wanted-poster-text"
@@ -87,7 +118,7 @@ function Poster({ name="Monkey D. Luffy", bounty=1000000000, wanted=true, width=
                 textLength="140"
                 transform="scale(4, 4)"
             >
-                {bounty.toLocaleString()}-
+                {bounty().toLocaleString()}-
             </text>
         </svg>
     );

@@ -3,23 +3,23 @@ import { getStorage, ref as refStorage } from "firebase/storage";
 import { useFirebaseApp, useDatabase, useDownloadURL } from "solid-firebase";
 import { For, Match, Show, Switch } from "solid-js";
 
-import Poster from "./poster";
+import { PosterDb } from "./poster";
 
 function PnmList({ year }) {
     year = year ?? (new Date().getFullYear() + 4)
 
     const app = useFirebaseApp();
     const db = getDatabase(app);
-    const pnms = useDatabase(refDb(db, `/rho/${year}/overview`));
+    const pnms = useDatabase(refDb(db, `/rho/years/${year}`));
 
     return (
-        <Switch >
+        <Switch>
             <Match when={pnms.loading}>
                 <p>Loading...</p>
             </Match>
             <Match when={pnms.data}>
-                <For each={Object.entries(pnms.data)}>{([id,  overview]) =>
-                    <PosterDb id={id} overview={overview} />
+                <For each={pnms.data}>{(id) =>
+                    <PosterDb id={id} width="150px" />
                 }</For>
             </Match>
             <Match when={pnms.error}>
@@ -27,24 +27,6 @@ function PnmList({ year }) {
                 <p>{JSON.stringify(pnms.error)}</p>
             </Match>
         </Switch>
-    );
-}
-
-function PosterDb({ id, overview: { name, flushed, bounty } }) {
-    const app = useFirebaseApp();
-    const storage = getStorage(app);
-    const image = useDownloadURL(refStorage(storage, `rho/${id}.jpg`));
-
-    return (
-        <Show when={image()}>
-            <Poster
-                name={name}
-                image={image()}
-                bounty={bounty}
-                wanted={!flushed}
-                width="200px"
-            />
-        </Show>
     );
 }
 

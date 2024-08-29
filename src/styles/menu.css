@@ -77,7 +77,8 @@
     background: rgb(26, 26, 27);
     color: rgba(255, 255, 255, 0.87);
 
-    font-family: 'Ysabeau SC', sans-serif;
+    /* consider helvertica? */
+    font-family: 'Ysabeau SC', sans-serif; 
     font-size: 24px;
     
     text-decoration: none;

@@ -58,3 +58,53 @@ In any case, the [Firebase Console](https://console.firebase.google.com/u/3/proj
 First, make sure everyone is on the phikaps-active@ email list.
 
 In the backend, there's a cloud function (`./functions/index.js:beforecreated`) that only allows accounts associated with an active brother's kerberos to be created. It does this by invoking an API on Athena' server (`./athena/actives.cgi`) that checks the mailing lists; most likely, that endpoint is going wrong so start your investigations there (e.g. it was moved or Athena is slower than Firebase's 7 second timeout today, etc.).
+
+## Database Structure
+
+### Rho
+
+Firebase's realtime database is used for everything. It's like a giant JSON file.
+```json
+{
+    "rho": {
+        "years": {
+            "2026": [
+                "weugh23j",
+                "egh294hb",
+                "g932ndav",
+            ],
+            "2027": [
+                "egub83wn",
+                "fgh392rb",
+                "w9hfvabf",
+            ],
+            // etc...
+        },
+        "people": {
+            "weugh23j": {
+                "name": "Monkey D. Luffy",
+                "flushed": false,
+                "invitedToBoat": false,
+                "invitedToSteakLobster": false,
+                "invitedToBid": false,
+                "notes": "Goes into gear 5,\n cool dude.",
+                "phone": "(617) 253-1212",
+            },
+            // etc...
+        },
+        "comments": {
+            "weugh23j": [
+                {
+                    "content": "he's gonna be kind of the pirates!",
+                    "from": "yohang",
+                    "date": 296723075
+                },
+                // etc...
+            ],
+            // etc...
+        }
+    }
+}
+```
+
+For files (e.g. PNM's profile pictures), the website uses Firebase storage. Images are at the path `/rho/<id>.jpg`.
