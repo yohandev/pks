@@ -18,7 +18,7 @@
 //   response.send("Hello from Firebase!");
 // });
 
-import { onRequest } from "firebase-functions/v2/https";
+import { onCall, onRequest } from "firebase-functions/v2/https";
 import { beforeUserCreated, HttpsError } from "firebase-functions/v2/identity";
 import https from "https";
 
@@ -55,7 +55,7 @@ export const beforecreated = beforeUserCreated(async (event) => {
     }
 });
 
-export const actives = onRequest(async (req, res) => {
+export const actives = onRequest({ timeoutSeconds: 1200, region: ["us-east1"] }, async (req, res) => {
     const { body: kerbs } = await get("https://phikaps-web.scripts.mit.edu/skullhouse3/api/actives.cgi");
 
     res.json(JSON.parse(kerbs));
