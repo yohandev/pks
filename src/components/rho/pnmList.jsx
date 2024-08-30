@@ -18,8 +18,10 @@ function PnmList({ year }) {
                 <p>Loading...</p>
             </Match>
             <Match when={pnms.data}>
-                <For each={pnms.data}>{(id) =>
-                    <PosterDb id={id} width="150px" />
+                <For each={pnms.data}>{(uuid) =>
+                    <a href={`/rho/${uuid}`}>
+                        <PosterDb uuid={uuid} width="150px" />
+                    </a>
                 }</For>
             </Match>
             <Match when={pnms.error}>

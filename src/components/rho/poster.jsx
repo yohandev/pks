@@ -21,18 +21,18 @@ const FLUSHED_MESSAGE = [
     "CABRÓN",
 ]
 
-export function PosterDb({ id, ...props }) {
+export function PosterDb({ uuid, ...props }) {
     const app = useFirebaseApp();
 
     const storage = getStorage(app);
-    const image = useDownloadURL(refStorage(storage, `rho/${id}.jpg`));
+    const image = useDownloadURL(refStorage(storage, `rho/${uuid}.jpg`));
     
     const db = getDatabase(app);
-    const info = useDatabase(refDb(db, `/rho/people/${id}`));
+    const info = useDatabase(refDb(db, `/rho/people/${uuid}`));
 
     return (
-        <Show when={info.data && image()}>
-            <Poster info={info.data} image={image()} {...props} />
+        <Show when={info.data}>
+            <Poster info={info.data} image={image} {...props} />
         </Show>
     );
 }
@@ -65,7 +65,7 @@ function Poster({ info, image, width="200px" }) {
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-            <image href={image} x="80" y="265" width="720" height="520" preserveAspectRatio="xMinYMid slice"/>
+            <image href={image.error ? null : image()} x="80" y="265" width="720" height="520" preserveAspectRatio="xMinYMid slice"/>
             <image href={paper} width="100%" height="100%" style="mix-blend-mode: lighten"/>
             <image href={poster} width="100%" height="100%"/>
             <text
@@ -118,7 +118,7 @@ function Poster({ info, image, width="200px" }) {
                 textLength="140"
                 transform="scale(4, 4)"
             >
-                {bounty().toLocaleString()}-
+                {bounty().toLocaleString() + "-"}
             </text>
         </svg>
     );
