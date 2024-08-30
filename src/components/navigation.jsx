@@ -9,8 +9,8 @@ import "../styles/navigation.css";
 import { Show } from "solid-js";
 
 function NavigationBar({ children }) {
-    const app = useFirebaseApp();
-    const auth = useAuth(getAuth(app));
+    // const app = useFirebaseApp();
+    // const auth = useAuth(getAuth(app));
 
     return (
         <>
@@ -22,7 +22,7 @@ function NavigationBar({ children }) {
                     {children}
                 </Menu>
             </div>
-            <Show when={auth.data}>
+            <Show when={true}>
                 <InternalMenu>
                     <a href="/alpha">&Alpha;</a>
                     <a href="/gamma">&Gamma;</a>

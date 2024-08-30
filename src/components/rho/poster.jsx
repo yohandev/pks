@@ -22,13 +22,22 @@ const FLUSHED_MESSAGE = [
 ]
 
 export function PosterDb({ uuid, ...props }) {
-    const app = useFirebaseApp();
-
-    const storage = getStorage(app);
-    const image = useDownloadURL(refStorage(storage, `rho/${uuid}.jpg`));
-    
-    const db = getDatabase(app);
-    const info = useDatabase(refDb(db, `/rho/people/${uuid}`));
+    // const app = useFirebaseApp();
+// 
+    // const storage = getStorage(app);
+    // const image = useDownloadURL(refStorage(storage, `rho/${uuid}.jpg`));
+    // 
+    // const db = getDatabase(app);
+    // const info = useDatabase(refDb(db, `/rho/people/${uuid}`));
+    const info = {
+        data: {
+            name: "Test Name",
+            flushed: false,
+        }
+    };
+    const image = {
+        error: true,
+    };
 
     return (
         <Show when={info.data}>
