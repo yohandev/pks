@@ -18,6 +18,7 @@
 //   response.send("Hello from Firebase!");
 // });
 
+import { onRequest } from "firebase-functions/v2/https";
 import { beforeUserCreated, HttpsError } from "firebase-functions/v2/identity";
 import https from "https";
 
@@ -52,4 +53,10 @@ export const beforecreated = beforeUserCreated(async (event) => {
     if (domain != "mit.edu" || !JSON.parse(kerbs).includes(kerb)) {
         throw new HttpsError('invalid-argument', "Only active brothers can sign up!");
     }
+});
+
+export const actives = onRequest(async (req, res) => {
+    const { body: kerbs } = await get("https://phikaps-web.scripts.mit.edu/skullhouse3/api/actives.cgi");
+
+    res.json(JSON.parse(kerbs));
 });
