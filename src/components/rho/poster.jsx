@@ -38,18 +38,8 @@ export function PosterDb({ uuid, ...props }) {
 }
 
 function Poster({ info, image, width="200px" }) {
-    const {
-        fullName,
-        flushed,
-        invitedToBoat,
-        invitedToSteakLobster,
-        invitedToBid,
-        notes,
-        phone,
-    } = info;
-
     const wantedMessage = createMemo(() => (
-        !flushed ? "WANTED" : FLUSHED_MESSAGE[Math.floor(Math.random() * FLUSHED_MESSAGE.length)]
+        !info.flushed ? "WANTED" : FLUSHED_MESSAGE[Math.floor(Math.random() * FLUSHED_MESSAGE.length)]
     ));
     const bounty = createMemo(() => (
         1000000000
@@ -108,7 +98,7 @@ function Poster({ info, image, width="200px" }) {
                 transform="scale(1, 10)"
                 textAnchor="middle"
             >
-                {fullName.toUpperCase()}
+                {info.fullName.toUpperCase()}
             </text>
             <text
                 class="wanted-poster-bounty"
