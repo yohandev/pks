@@ -31,8 +31,8 @@ export function PosterDb({ uuid, ...props }) {
     // const info = useDatabase(refDb(db, `/rho/people/${uuid}`));
     const info = {
         data: {
-            name: "Test Name",
-            flushed: false,
+            fullName: "Test Name",
+            flushed: true,
         }
     };
     const image = {
@@ -48,7 +48,7 @@ export function PosterDb({ uuid, ...props }) {
 
 function Poster({ info, image, width="200px" }) {
     const {
-        name,
+        fullName,
         flushed,
         invitedToBoat,
         invitedToSteakLobster,
@@ -117,7 +117,7 @@ function Poster({ info, image, width="200px" }) {
                 transform="scale(1, 10)"
                 textAnchor="middle"
             >
-                {name.toUpperCase()}
+                {fullName.toUpperCase()}
             </text>
             <text
                 class="wanted-poster-bounty"

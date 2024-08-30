@@ -39,18 +39,56 @@ a:hover {
     color: #ffe59f;
 }
 
-.hover\:glow {
+input:not([type="image"], [type="range"], [type="checkbox"], [type="radio"]), textarea {
+    border-radius: 5px;
+    border: solid rgb(43, 44, 52);
+    outline: none;
+
+    padding: 5px;
+    
+    background: #36353b;
+    color: rgba(255, 255, 255, 0.87);
+
+    font-family: Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+label {
+    font-family: Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.form-item {
+    display: flex;
+    flex-direction: column;
+
+    margin: 5px;
+}
+
+.hover\:glow, input, textarea {
     transition: filter 300ms;
     will-change: filter;
 }
 
-.hover\:glow:hover {
+.hover\:glow:hover, input:focus-visible, textarea:focus-visible {
     filter: drop-shadow(0 0 3px #ffe59f93);
 }
 
 .flex\:row {
     display: flex;
     flex-direction: row;
+}
+
+.flex\:prefer-row {
+    display: flex;
+    flex-direction: row;
+}
+
+@media (max-width: 900px) {
+    .flex\:prefer-row {
+        flex-direction: column;
+    }
 }
 
 .flex\:column {

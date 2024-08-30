@@ -82,7 +82,7 @@ Firebase's realtime database is used for everything. It's like a giant JSON file
         },
         "people": {
             "weugh23j": {
-                "name": "Monkey D. Luffy",
+                "fullName": "Monkey D. Luffy",
                 "flushed": false,
                 "invitedToBoat": false,
                 "invitedToSteakLobster": false,
