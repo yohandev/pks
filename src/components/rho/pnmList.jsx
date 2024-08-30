@@ -8,12 +8,9 @@ import { PosterDb } from "./poster";
 function PnmList({ year }) {
     year = year ?? (new Date().getFullYear() + 4)
 
-    // const app = useFirebaseApp();
-    // const db = getDatabase(app);
-    // const pnms = useDatabase(refDb(db, `/rho/years/${year}`));
-    const pnms = {
-        data: ["pking"]
-    };
+    const app = useFirebaseApp();
+    const db = getDatabase(app);
+    const pnms = useDatabase(refDb(db, `/rho/years/${year}`));
 
     return (
         <Switch>
