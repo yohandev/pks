@@ -2,6 +2,22 @@ import { getAuth, signInWithEmailLink, sendSignInLinkToEmail, isSignInWithEmailL
 import { useAuth, useFirebaseApp } from "solid-firebase";
 import { Match, Show, Switch, createEffect, createSignal } from "solid-js";
 
+export async function activesKerbs() {
+    if (document.cachedActivesKerbs) {
+        return document.cachedActivesKerbs;
+    }
+
+    console.log("Fetching kerbs...");
+
+    const res = await fetch("https://us-east1-pks-website.cloudfunctions.net/actives");
+    if (!res.ok) {
+        console.error(`Unable to fetch list of actives! ${res.status}`);
+        return [];
+    }
+
+    return (document.cachedActivesKerbs = await res.json());
+}
+
 export function Auth() {
     const app = useFirebaseApp();
     const auth = useAuth(getAuth(app));

@@ -1,8 +1,9 @@
-import { createSignal } from "solid-js";
 import { useFirebaseApp, useDatabase } from "solid-firebase";
 import { getDatabase, ref as refDb, set as setDb, update } from "firebase/database";
 
 import { PosterDb } from "./poster";
+import { activesKerbs } from "../auth";
+import { createResource } from "solid-js";
 
 function PnmEdit({ uuid }) {
     const app = useFirebaseApp();
@@ -11,8 +12,10 @@ function PnmEdit({ uuid }) {
     const info = useDatabase(pathDb);
 
     return (
-        <div class="pnm-container flex:prefer-row content">
-            <PosterDb uuid={uuid} width="250px" />
+        <div class="flex:prefer-row flex:space-around content">
+            <div class="margin:10px">
+                <PosterDb uuid={uuid} width="250px" />
+            </div>
             <Switch>
                 <Match when={info.loading}>
                     <p>Loading...</p>
@@ -33,6 +36,8 @@ function PnmEditForm({ uuid, info }) {
     const app = useFirebaseApp();
     const db = getDatabase(app);
 
+    const [actives] = createResource(activesKerbs);
+
     function saveChanges(e) {
         e.preventDefault();
 
@@ -50,6 +55,8 @@ function PnmEditForm({ uuid, info }) {
         }
     }
 
+    console.log(actives());
+
     return (
         <form class="flex:column" onChange={saveChanges} onSubmit={saveChanges}>
             <div class="form-item">
@@ -57,21 +64,21 @@ function PnmEditForm({ uuid, info }) {
                 <textarea id="notes" name="notes" placeholder="Summary/notes for this PNM" value={info.notes ?? ""}></textarea>
             </div>
             <div class="flex:prefer-row flex:wrap">
-                <div class="form-item">
+                <div class="form-item flex:40%">
                     <label for="fullName">Name</label>
                     <input id="fullName" name="fullName" type="text" placeholder="Name" value={info.fullName ?? ""}></input>
                 </div>
-                <div class="form-item">
+                <div class="form-item flex:40%">
                     <label for="phone">Phone Number</label>
                     <input id="phone" name="phone" type="tel" placeholder="(617) 253-1212" value={info.phone ?? ""}></input>
                 </div>
-                <div class="form-item">
+                <div class="form-item flex:40%">
                     <label for="contact">Primary Contact</label>
-                    <input id="contact" name="contact" type="text"></input>
+                    <input id="contact" name="contact" type="text" value={info.contact ?? ""}></input>
                 </div>
-                <div class="form-item">
+                <div class="form-item flex:40%">
                     <label for="lastContacted">Last Contacted</label>
-                    <input id="lastContacted" name="lastContacted" type="date"></input>
+                    <input id="lastContacted" name="lastContacted" type="date" value={info.lastContacted ?? ""}></input>
                 </div>
             </div>
         </form>

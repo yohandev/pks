@@ -108,6 +108,22 @@ label {
     flex-wrap: wrap;
 }
 
+.flex\:50\% {
+    flex: 50%;
+}
+
+.flex\:40\% {
+    flex: 40%;
+}
+
+.flex\:space-around {
+    justify-content: space-around;
+}
+
+.margin\:10px {
+    margin: 10px;
+}
+
 .content {
     margin: 40px 100px;
 }
