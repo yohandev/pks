@@ -5,17 +5,46 @@ import { getAuth } from "firebase/auth";
 import { PosterDb } from "./poster";
 import { activesKerbs } from "../auth";
 import { createEffect, createMemo, createResource, For, Switch } from "solid-js";
+import { getStorage, ref as refStorage, uploadBytes } from "firebase/storage";
 
 function PnmEdit({ uuid }) {
     const app = useFirebaseApp();
     const db = getDatabase(app);
     const info = useDatabase(refDb(db, `/rho/people/${uuid}`));
 
+    const storage = getStorage(app);
+    const photoRef = refStorage(storage, `rho/${uuid}.jpg`);
+
+    function uploadPhotoChanged(e) {
+        const selected = e.target?.files?.[0];
+        if (!selected) {
+            return;
+        }
+
+        uploadBytes(photoRef, selected).then(() => {
+            setTimeout(() => {
+                window.location.reload();
+            }, 500);
+        });
+    }
+
     return (
         <div class="flex:column content">
             <div class="flex:prefer-row flex:space-around">
-                <div class="margin:10px">
-                    <PosterDb uuid={uuid} width="250px" />
+                <div class="flex:column flex:align-center">
+                    <div class="margin:10px">
+                        <PosterDb uuid={uuid} width="250px" />
+                    </div>
+                    <form>
+                        <input
+                            type="file"
+                            id="photo"
+                            name="photo"
+                            accept="image/*"
+                            onChange={uploadPhotoChanged}
+                        ></input>
+                        <label for="photo">Upload Photo</label>
+                    </form>
                 </div>
                 <Switch fallback={<p>PNM not found!</p>}>
                     <Match when={info.loading}>
@@ -30,6 +59,7 @@ function PnmEdit({ uuid }) {
                     </Match>
                 </Switch>
             </div>
+            <div style="height: 30px"></div>
             <Comments uuid={uuid} />
         </div>
     );

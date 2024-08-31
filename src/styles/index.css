@@ -39,11 +39,14 @@ a:hover {
     color: #ffe59f;
 }
 
-input:not([type="image"], [type="range"], [type="checkbox"], [type="radio"]), textarea, select {
+input:not([type="image"], [type="range"], [type="checkbox"], [type="radio"]),
+textarea,
+select,
+input[type="file"] ~ label {
     appearance: none;
     
     border-radius: 5px;
-    border: solid rgb(43, 44, 52);
+    border: solid 1.5px rgb(43, 44, 52);
     outline: none;
 
     padding: 5px;
@@ -54,6 +57,11 @@ input:not([type="image"], [type="range"], [type="checkbox"], [type="radio"]), te
 
     font-family: Helvetica, sans-serif;
     font-size: 14px;
+    font-weight: normal;
+}
+
+input[type="file"] {
+    display: none;
 }
 
 label {
