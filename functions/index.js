@@ -58,5 +58,6 @@ export const beforecreated = beforeUserCreated(async (event) => {
 export const actives = onRequest({ timeoutSeconds: 1200, region: ["us-east1"] }, async (req, res) => {
     const { body: kerbs } = await get("https://phikaps-web.scripts.mit.edu/skullhouse3/api/actives.cgi");
 
+    res.set('Cache-Control', 'public, max-age=30000, s-maxage=60000');
     res.json(JSON.parse(kerbs));
 });
