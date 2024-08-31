@@ -185,7 +185,7 @@ function Comments({ uuid }) {
                     <label for="comment">Add a new comment</label>
                     <textarea id="comment" name="comment" placeholder={placeholder()}></textarea>
 
-                    <input type="submit" value="Post" />
+                    <input type="submit" value="Post Comment" />
                 </div>
             </form>
             <Switch>

@@ -1,10 +1,9 @@
 import { getDatabase, push as pushDb, ref as refDb, set as setDb } from "firebase/database";
-import { getStorage, ref as refStorage } from "firebase/storage";
 import { useFirebaseApp, useDatabase, useDownloadURL } from "solid-firebase";
-import { For, Match, Show, Switch } from "solid-js";
+import { For, Match, Switch } from "solid-js";
 
-import { PosterDb } from "./poster";
 import { useNavigate } from "@solidjs/router";
+import { PnmPhoto } from "./photo";
 
 function PnmList({ year }) {
     year = year ?? (new Date().getFullYear() + 4)
@@ -34,16 +33,14 @@ function PnmList({ year }) {
             <form onSubmit={addPnm}>
                 <input type="submit" value="Add a new PNM"></input>
             </form>
-            <div class="flex:row flex:wrap flex:justify-center">
+            <div class="flex:column flex:justify-center">
                 <Switch>
                     <Match when={pnms.loading}>
                         <p>Loading...</p>
                     </Match>
                     <Match when={pnms.data}>
                         <For each={Object.values(pnms.data)}>{(uuid) =>
-                            <a href={`/rho/${uuid}`} class="margin:5px">
-                                <PosterDb uuid={uuid} width="150px" />
-                            </a>
+                            <PnmListItem uuid={uuid} />
                         }</For>
                     </Match>
                     <Match when={pnms.error}>
@@ -53,6 +50,22 @@ function PnmList({ year }) {
                 </Switch>
             </div>
         </div>
+    );
+}
+
+function PnmListItem({ uuid }) {
+    const app = useFirebaseApp();
+
+    const db = getDatabase(app);
+    const name = useDatabase(refDb(db, `/rho/people/${uuid}/fullName`));
+    
+    return (
+        <a href={`/rho/${uuid}`} class="flex:row margin:5px">
+            <div class="hover:glow">
+                <PnmPhoto uuid={uuid} size="70px" />
+            </div>
+            {name.loading ? "🔄" : name.data}
+        </a>
     );
 }
 

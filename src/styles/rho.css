@@ -12,3 +12,62 @@
 
     margin: auto;
 }
+
+.rho-pnm-photo {
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.rho-pnm-photo img {
+    object-fit: cover;
+
+    width: 100%;
+    height: 100%;
+}
+
+.rho-pnm-flushed img {
+    filter: grayscale(100%);
+}
+
+.rho-pnm-name {
+    margin-left: 10px;
+
+    font-family: Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.rho-pnm-flushed .rho-pnm-name {
+    text-decoration: line-through;
+}
+
+.rho-pnm-status {
+    font-family: Helvetica, sans-serif;
+
+    margin-left: auto;
+    margin-right: 5px;
+    letter-spacing: 7.5px;
+}
+
+.rho-pnm-contacted {
+    letter-spacing: normal;
+    text-align: right;
+    margin-right: 7.5px;
+}
+
+.rho-pnm-list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    padding: 10px;
+    margin: 2px 0;
+
+    border: solid 1.5px rgb(15, 15, 16);
+    border-radius: 7.5px;
+
+    background: rgb(22, 22, 22);
+}
+
+.rho-pnm-list-item:nth-child(odd) {
+    background: rgb(19, 19, 20);
+}
