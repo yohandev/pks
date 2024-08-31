@@ -3,7 +3,7 @@ import { getDatabase, ref as refDb, set as setDb, update } from "firebase/databa
 
 import { PosterDb } from "./poster";
 import { activesKerbs } from "../auth";
-import { createResource } from "solid-js";
+import { createEffect, createResource } from "solid-js";
 
 function PnmEdit({ uuid }) {
     const app = useFirebaseApp();
@@ -38,6 +38,10 @@ function PnmEditForm({ uuid, info }) {
 
     const [actives] = createResource(activesKerbs);
 
+    createEffect(() => {
+        console.log(actives());
+    });
+
     function saveChanges(e) {
         e.preventDefault();
 
@@ -54,8 +58,6 @@ function PnmEditForm({ uuid, info }) {
             setDb(refDb(db, `/rho/people/${uuid}`), updatedPnm);
         }
     }
-
-    console.log(actives());
 
     return (
         <form class="flex:column" onChange={saveChanges} onSubmit={saveChanges}>

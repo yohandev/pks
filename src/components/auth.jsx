@@ -7,8 +7,6 @@ export async function activesKerbs() {
         return document.cachedActivesKerbs;
     }
 
-    console.log("Fetching kerbs...");
-
     const res = await fetch("https://us-east1-pks-website.cloudfunctions.net/actives");
     if (!res.ok) {
         console.error(`Unable to fetch list of actives! ${res.status}`);
