@@ -64,11 +64,19 @@ function PnmEditForm({ uuid, info }) {
             <div class="flex:prefer-row flex:wrap">
                 <div class="form-item flex:40%">
                     <label for="fullName">Name</label>
-                    <input id="fullName" name="fullName" type="text" placeholder="Name" value={info.fullName ?? ""}></input>
+                    <input id="fullName" name="fullName" type="text" placeholder="???" value={info.fullName ?? ""}></input>
                 </div>
                 <div class="form-item flex:40%">
                     <label for="phone">Phone Number</label>
-                    <input id="phone" name="phone" type="tel" placeholder="(617) 253-1212" value={info.phone ?? ""}></input>
+                    <input id="phone" name="phone" type="tel" placeholder="???" value={info.phone ?? ""}></input>
+                </div>
+                <div class="form-item flex:40%">
+                    <label for="hometown">Hometown</label>
+                    <input id="hometown" name="hometown" type="text" placeholder="???" value={info.hometown ?? ""}></input>
+                </div>
+                <div class="form-item flex:40%">
+                    <label for="major">Major</label>
+                    <input id="major" name="major" type="text" placeholder="???" value={info.major ?? ""}></input>
                 </div>
                 <div class="form-item flex:40%">
                     <label for="contact">Primary Contact</label>
@@ -76,7 +84,7 @@ function PnmEditForm({ uuid, info }) {
                         <For each={actives()}>{(kerb) =>
                             <option value={kerb} selected={kerb == info.contact}>{kerb}</option>
                         }</For>
-                        <option value="" selected={!info.contact} disabled hidden>No one</option>
+                        <option value="" selected={!info.contact} disabled hidden>???</option>
                     </select>
                 </div>
                 <div class="form-item flex:40%">

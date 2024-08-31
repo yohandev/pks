@@ -89,6 +89,8 @@ Firebase's realtime database is used for everything. It's like a giant JSON file
                 "invitedToBid": false,
                 "notes": "Goes into gear 5,\n cool dude.",
                 "phone": "(617) 253-1212",
+                "hometown": "Caguas, PR",
+                "major": "6-2",
             },
             // etc...
         },
