@@ -40,11 +40,14 @@ a:hover {
 }
 
 input:not([type="image"], [type="range"], [type="checkbox"], [type="radio"]), textarea, select {
+    appearance: none;
+    
     border-radius: 5px;
     border: solid rgb(43, 44, 52);
     outline: none;
 
     padding: 5px;
+    margin-top: 2px;
     
     background: #36353b;
     color: rgba(255, 255, 255, 0.87);
