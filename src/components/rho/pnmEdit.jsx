@@ -3,7 +3,7 @@ import { getDatabase, ref as refDb, set as setDb, update } from "firebase/databa
 
 import { PosterDb } from "./poster";
 import { activesKerbs } from "../auth";
-import { createEffect, createResource } from "solid-js";
+import { createEffect, createResource, For } from "solid-js";
 
 function PnmEdit({ uuid }) {
     const app = useFirebaseApp();
@@ -37,10 +37,6 @@ function PnmEditForm({ uuid, info }) {
     const db = getDatabase(app);
 
     const [actives] = createResource(activesKerbs);
-
-    createEffect(() => {
-        console.log(actives());
-    });
 
     function saveChanges(e) {
         e.preventDefault();
@@ -76,7 +72,12 @@ function PnmEditForm({ uuid, info }) {
                 </div>
                 <div class="form-item flex:40%">
                     <label for="contact">Primary Contact</label>
-                    <input id="contact" name="contact" type="text" value={info.contact ?? ""}></input>
+                    <select id="contact" name="contact">
+                        <For each={actives()}>{(kerb) =>
+                            <option value={kerb} selected={kerb == info.contact}>{kerb}</option>
+                        }</For>
+                        <option value="" selected={!info.contact} disabled hidden>No one</option>
+                    </select>
                 </div>
                 <div class="form-item flex:40%">
                     <label for="lastContacted">Last Contacted</label>

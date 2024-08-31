@@ -13,7 +13,7 @@ export async function activesKerbs() {
         return [];
     }
 
-    return (document.cachedActivesKerbs = await res.json());
+    return (document.cachedActivesKerbs = (await res.json()).filter((kerb) => kerb != ""));
 }
 
 export function Auth() {
