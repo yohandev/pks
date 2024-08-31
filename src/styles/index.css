@@ -135,6 +135,10 @@ label {
     margin: 10px;
 }
 
+.margin\:5px {
+    margin: 5px;
+}
+
 .content {
     margin: 40px 100px;
 }
