@@ -2,7 +2,7 @@ import { Match, Switch } from "solid-js";
 import { useParams } from "@solidjs/router";
 
 import { PnmEdit } from "./edit";
-import { PnmList } from "./list";
+import { AddPnmButton, PnmList } from "./list";
 
 import "../../styles/rho.css";
 
@@ -16,6 +16,7 @@ function Rho() {
                     <PnmEdit uuid={params.uuid} />
                 </Match>
                 <Match when={!params.uuid}>
+                    <AddPnmButton />
                     <PnmList />
                 </Match>
             </Switch>

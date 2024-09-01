@@ -1,8 +1,9 @@
 import { useDatabase, useFirebaseApp } from "solid-firebase";
-import { getDatabase, ref as refDb } from "firebase/database";
+import { getDatabase, ref as refDb, push as pushDb, set as setDb } from "firebase/database";
 
 import { PnmPhoto } from "./photo";
 import { createMemo, For, Match, Show, Switch } from "solid-js";
+import { useNavigate } from "@solidjs/router";
 
 export function PnmList({ year }) {
     const app = useFirebaseApp();
@@ -32,6 +33,33 @@ export function PnmList({ year }) {
                 </div>
             </Match>
         </Switch>
+    );
+}
+
+export function AddPnmButton({ year }) {
+    const app = useFirebaseApp();
+    const db = getDatabase(app);
+    const navigate = useNavigate();
+
+    function addPnm(e) {
+        e.preventDefault();
+
+        const newPnmRef = pushDb(refDb(db, `/rho/people`));
+
+        newPnmRef.then((val) => {
+            const inYearRef = pushDb(refDb(db, `/rho/years/${year ?? (new Date().getFullYear() + 4)}`));
+            setDb(inYearRef, val.key);
+
+            navigate(`/rho/${val.key}`);
+        })
+
+        setDb(newPnmRef, { fullName: "new PNM" });
+    }
+
+    return (
+        <form onSubmit={addPnm} class="margin:10px" style="margin-top: -20px;">
+            <input type="submit" value="Add a new PNM"></input>
+        </form>
     );
 }
 

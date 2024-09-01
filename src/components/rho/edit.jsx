@@ -216,7 +216,7 @@ function PnmUploadPhotoButton({ uuid }) {
                 // Done, reload the page to see effects
                 setTimeout(() => {
                     window.location.reload();
-                }, 500);
+                }, 1000);
             });
         }
 
