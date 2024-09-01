@@ -42,6 +42,7 @@ a:hover {
 input:not([type="image"], [type="range"], [type="checkbox"], [type="radio"]),
 textarea,
 select,
+fieldset,
 input[type="file"] ~ label {
     appearance: none;
     
@@ -50,7 +51,7 @@ input[type="file"] ~ label {
     outline: none;
 
     padding: 5px;
-    margin-top: 2px;
+    margin: 2px 0 0 0;
     
     background: #36353b;
     color: rgba(255, 255, 255, 0.87);
@@ -117,6 +118,10 @@ label {
 
 .flex\:wrap {
     flex-wrap: wrap;
+}
+
+.flex\:100\% {
+    flex:100%;
 }
 
 .flex\:50\% {

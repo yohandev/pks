@@ -55,9 +55,10 @@ function PnmEditForm({ uuid, info }) {
         const updatedField = e.target?.name;
         if (updatedField) {
             // Make a small update if possible
-            setDb(refDb(db, `/rho/people/${uuid}/${updatedField}`), e.target.value);
+            setDb(refDb(db, `/rho/people/${uuid}/${updatedField}`), e.target.checked ?? e.target.value);
         } else {
             // Or just update the entire document
+            console.log(`update whole PNM`)
             setDb(refDb(db, `/rho/people/${uuid}`), Object.fromEntries(new FormData(e.target).entries()));
         }
     }
@@ -83,6 +84,23 @@ function PnmEditForm({ uuid, info }) {
                     </select>
                 </div>
                 <PnmEditFormItem name="lastContacted" type="date" info={info}>Last Contacted</PnmEditFormItem>
+                <div class="form-item flex:100%">
+                    <label for="invitedTo">Invited to</label>
+                    <fieldset name="invitedTo" class="flex:prefer-row flex:space-around">
+                        <div class="flex:row flex:justify-center">
+                            <input type="checkbox" id="inv0" name="inv0" checked={info.inv0}></input>
+                            <label for="inv0">Boat Cruise 🚢</label>
+                        </div>
+                        <div class="flex:row flex:justify-center">
+                            <input type="checkbox" id="inv1" name="inv1" checked={info.inv1}></input>
+                            <label for="inv1">Steak & Lobster 🦞</label>
+                        </div>
+                        <div class="flex:row flex:justify-center">
+                            <input type="checkbox" id="inv2" name="inv2" checked={info.inv2}></input>
+                            <label for="inv2">Bid Dinner ☠️</label>
+                        </div>
+                    </fieldset>
+                </div>
             </div>
         </form>
     );
