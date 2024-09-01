@@ -71,3 +71,11 @@
 .rho-pnm-list-item:nth-child(odd) {
     background: rgb(19, 19, 20);
 }
+
+.rho-pnm-comments-container {
+    margin: 10px;
+}
+
+.rho-pnm-comment {
+    font-family: Helvetica, sans-serif;
+}

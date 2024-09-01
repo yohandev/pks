@@ -1,6 +1,6 @@
-import { createEffect, createMemo, createResource, createUniqueId, Match, Show, Switch } from "solid-js";
+import { createMemo, createResource, Match, Show, Switch } from "solid-js";
 import { useAuth, useDatabase, useFirebaseApp } from "solid-firebase";
-import { getDatabase, ref as refDb, set as setDb } from "firebase/database";
+import { getDatabase, ref as refDb, set as setDb, push as pushDb } from "firebase/database";
 import { deleteObject, getStorage, ref as refStorage, uploadBytes } from "firebase/storage";
 
 import { PnmPhoto } from "./photo";
@@ -31,6 +31,7 @@ export function PnmEdit({ uuid }) {
                     </Match>
                 </Switch>
             </div>
+            <PnmComments uuid={uuid} />
         </div>
     );
 }
@@ -237,6 +238,84 @@ function PnmUploadPhotoButton({ uuid }) {
     );
 }
 
-function PnmComments({ uuid }) {
 
+const COMMENT_PLACEHOLDERS = [
+    "I like him because...",
+    "I hate him because...",
+    "He didn't say bye to me, so...",
+    "Pretty good head, so...",
+    "Chill may he be, he....",
+    "The following is a dissertation of why I will meatride this man until the end of time; first and foremost, he...",
+    "I have nothing to say but I will say something anyways, he...",
+    "Chat, is this real?",
+];
+
+function PnmComments({ uuid }) {
+    const app = useFirebaseApp();
+    const db = getDatabase(app);
+    const auth = useAuth(getAuth(app));
+
+    const commentsRef = refDb(db, `/rho/comments/${uuid}`);
+    const comments = useDatabase(commentsRef);
+
+    const placeholder = createMemo(() => (
+        COMMENT_PLACEHOLDERS[Math.floor(Math.random() * COMMENT_PLACEHOLDERS.length)]
+    ));
+
+    function submitComment(e) {
+        e.preventDefault();
+
+        const comment = e.target?.comment?.value;
+        if (!comment) {
+            return;
+        }
+
+        const kerb = auth.data?.email?.split("@")[0];
+        if (!kerb) {
+            alert("Not signed in! (how did you even get this far??)");
+            return;
+        }
+
+        const newCommentRef = pushDb(commentsRef);
+        setDb(newCommentRef, {
+            content: comment,
+            from: kerb,
+            date: (new Date()).toISOString(),
+        });
+
+        e.target?.reset();
+
+        console.log(`Posting a comment as ${kerb}: "${comment}"`);
+    }
+
+    return (
+        <div>
+            <form onSubmit={submitComment}>
+                <div class="form-item">
+                    <label for="comment">Add a new comment</label>
+                    <textarea id="comment" name="comment" placeholder={placeholder()}></textarea>
+
+                    <input type="submit" value="Post Comment" />
+                </div>
+            </form>
+            <div class="rho-pnm-comments-container">
+                <Switch>
+                    <Match when={comments.loading}>
+                        <p>Loading comments...</p>
+                    </Match>
+                    <Match when={comments.data}>
+                        <For each={Object.values(comments.data).reverse()}>{({ content, date, from }) =>
+                            <div class="rho-pnm-comment">
+                                <b>{from}</b> ({new Date(date).toLocaleDateString().split("/").slice(0, 2).join("/")}): {content}
+                            </div>
+                        }</For>
+                    </Match>
+                    <Match when={comments.error}>
+                        <p>There was an error fetching comments for this PNM...</p>
+                        <p>{JSON.stringify(comments.error)}</p>
+                    </Match>
+                </Switch>
+            </div>
+        </div>
+    );
 }
