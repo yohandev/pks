@@ -1,10 +1,11 @@
-import { createResource, createUniqueId, Match, Show, Switch } from "solid-js";
-import { useDatabase, useFirebaseApp } from "solid-firebase";
+import { createEffect, createMemo, createResource, createUniqueId, Match, Show, Switch } from "solid-js";
+import { useAuth, useDatabase, useFirebaseApp } from "solid-firebase";
 import { getDatabase, ref as refDb, set as setDb } from "firebase/database";
 import { deleteObject, getStorage, ref as refStorage, uploadBytes } from "firebase/storage";
 
 import { PnmPhoto } from "./photo";
 import { activesKerbs } from "../auth";
+import { getAuth } from "firebase/auth";
 
 export function PnmEdit({ uuid }) {
     const app = useFirebaseApp();
@@ -43,6 +44,52 @@ function PnmEditFormItem({ info, name, type, children }) {
     );
 }
 
+
+function PnmEditFormItemOptions(props) {
+    return (
+        <div class="form-item flex:40%">
+            <label for={props.name}>{props.children}</label>
+            <select id={props.name} name={props.name}>
+                <For each={props.options}>{(opt) =>
+                    <option value={opt} selected={opt == props.info[props.name]}>{opt}</option>
+                }</For>
+                <option value="" selected={!props.info[props.name]} disabled hidden>???</option>
+            </select>
+        </div>
+    );
+}
+
+function PnmEditFormItemPerUser(props) {
+    const app = useFirebaseApp();
+    const db = getDatabase(app);
+    const auth = useAuth(getAuth(app));
+
+    const currentUser = createMemo(() => {
+        return auth.data?.email?.split("@")[0];
+    });
+    const score = createMemo(() => props.info.score?.[currentUser()]);
+    const name = createMemo(() => props.info.fullName?.split(" ")?.[0]);
+
+    // This one is special
+    function onChange(e) {
+        e.stopPropagation();
+
+        setDb(refDb(db, `/rho/people/${props.uuid}/score/${currentUser()}`), e.target.value);
+    }
+
+    return (
+        <div class="form-item flex:40%">
+            <label for="score">How I feel</label>
+            <select id="score" name="score" onChange={onChange}>
+                <option value={-1} selected={score() == -1}>I dislike {name()}</option>
+                <option value={0} selected={!score() || score() == 0}>I haven't met {name()}</option>
+                <option value={1} selected={score() == 1}>I lack strong feelings about {name()}</option>
+                <option value={2} selected={score() == 2}>I like {name()}</option>
+            </select>
+        </div>
+    );
+}
+
 function PnmEditForm({ uuid, info }) {
     const app = useFirebaseApp();
     const db = getDatabase(app);
@@ -74,16 +121,9 @@ function PnmEditForm({ uuid, info }) {
                 <PnmEditFormItem name="phone" type="tel" info={info}>Phone Number</PnmEditFormItem>
                 <PnmEditFormItem name="hometown" type="text" info={info}>Hometown</PnmEditFormItem>
                 <PnmEditFormItem name="major" type="text" info={info}>Major</PnmEditFormItem>
-                <div class="form-item flex:40%">
-                    <label for="contact">Primary Contact</label>
-                    <select id="contact" name="contact">
-                        <For each={actives()}>{(kerb) =>
-                            <option value={kerb} selected={kerb == info.contact}>{kerb}</option>
-                        }</For>
-                        <option value="" selected={!info.contact} disabled hidden>???</option>
-                    </select>
-                </div>
+                <PnmEditFormItemOptions name="contact" options={actives()} info={info}>Primary Contact</PnmEditFormItemOptions>
                 <PnmEditFormItem name="lastContacted" type="date" info={info}>Last Contacted</PnmEditFormItem>
+                <PnmEditFormItemPerUser uuid={uuid} info={info} />
                 <div class="form-item flex:100%">
                     <label for="invitedTo">Invited to</label>
                     <fieldset name="invitedTo" class="flex:prefer-row flex:space-around">
