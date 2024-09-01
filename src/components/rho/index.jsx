@@ -1,33 +1,26 @@
-import { Show } from "solid-js";
-import { useNavigate, useParams, useSearchParams } from "@solidjs/router";
-import PnmEdit from "./pnmEdit";
+import { Match, Switch } from "solid-js";
+import { useParams } from "@solidjs/router";
 
-import "../../styles/rho.css";
+import { PnmEdit } from "./edit";
 import { PnmList } from "./list";
 
+import "../../styles/rho.css";
+
 function Rho() {
-    const navigate = useNavigate();
     const params = useParams();
 
-    function closeEditPage(e) {
-        if (e.target != e.currentTarget) {
-            return;
-        }
-        navigate("/rho");
-    }
-
     return (
-        <>
-            <div class="content">
-                <PnmList />
-            </div>
-            <Show when={params.uuid}>
-                <div class="rho-edit-container" onClick={closeEditPage}>
+        <div class="content">
+            <Switch>
+                <Match when={params.uuid}>
                     <PnmEdit uuid={params.uuid} />
-                </div>
-            </Show>
-        </>
-    )
+                </Match>
+                <Match when={!params.uuid}>
+                    <PnmList />
+                </Match>
+            </Switch>
+        </div>
+    );
 }
 
 export default Rho;

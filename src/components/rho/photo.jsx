@@ -1,7 +1,7 @@
-import { getDatabase, ref as refDb } from "firebase/database";
-import { getStorage, ref as refStorage } from "firebase/storage";
+import { getDatabase, ref as refDb, set } from "firebase/database";
+import { deleteObject, getBytes, getStorage, ref as refStorage, uploadBytes } from "firebase/storage";
 import { useDatabase, useDownloadURL, useFirebaseApp } from "solid-firebase";
-import { Match, Show, Switch } from "solid-js";
+import { createEffect, createMemo, Match, Show, Switch } from "solid-js";
 
 import anonymous from "../../assets/rho/anonymous.jpg";
 
@@ -17,9 +17,12 @@ export function PnmPhoto({ uuid, size="50px" }) {
         );
     }
 
-    function Inner({ path }) {
+    // Can't destructure props here
+    // https://github.com/solidjs/solid/discussions/287#discussioncomment-240864
+    function Inner(props) {
         const storage = getStorage(app);
-        const image = useDownloadURL(refStorage(storage, `rho/${path}`));
+        const path = createMemo(() => refStorage(storage, `rho/${props.path}_300x300`));
+        const image = useDownloadURL(path);
 
         return (
             <Show
