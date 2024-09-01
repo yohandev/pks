@@ -10,6 +10,7 @@ export function PnmPhoto({ uuid, size="50px" }) {
 
     const db = getDatabase(app);
     const path = useDatabase(refDb(db, `/rho/people/${uuid}/photo`));
+    const flushed = useDatabase(refDb(db, `/rho/people/${uuid}/flushed`));
 
     function Fallback() {
         return (
@@ -29,7 +30,7 @@ export function PnmPhoto({ uuid, size="50px" }) {
                 when={!image.error && image()}
                 fallback={<Fallback />}
             >
-                <img src={image()} />
+                <img class={props.flushed ? "rho-pnm-flushed" : ""} src={image()} />
             </Show>
         );
     }
@@ -41,7 +42,7 @@ export function PnmPhoto({ uuid, size="50px" }) {
                     <Fallback />
                 </Match>
                 <Match when={path.data}>
-                    <Inner path={path.data} />
+                    <Inner path={path.data} flushed={flushed.data} />
                 </Match>
                 <Match when={path.error}>
                     <Fallback />

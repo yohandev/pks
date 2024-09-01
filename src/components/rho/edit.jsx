@@ -15,7 +15,7 @@ export function PnmEdit({ uuid }) {
     return (
         <div class="flex:column">
             <div class="rho-pnm-header">
-                {info.data?.fullName}
+                {info.data?.fullName} {info.data?.flushed ? "(FLUSHED)" : ""}
             </div>
             <div class="flex:prefer-row flex:space-around">
                 <div class="flex:column margin:10px">
