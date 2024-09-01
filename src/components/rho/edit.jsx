@@ -90,6 +90,44 @@ function PnmEditFormItemPerUser(props) {
     );
 }
 
+function PnmEditFormFeelsStatus(props) {
+    const hasMet = createMemo(() => {
+        return Object
+            .entries(props.info.score ?? {})
+            .filter(([_, score]) => score != 0)
+            .map(([kerb, _]) => kerb);
+    });
+    const likes = createMemo(() => {
+        return Object
+            .entries(props.info.score ?? {})
+            .filter(([_, score]) => score == 2)
+            .map(([kerb, _]) => kerb);
+    });
+    const dislikes = createMemo(() => {
+        return Object
+            .entries(props.info.score ?? {})
+            .filter(([_, score]) => score == -1)
+            .map(([kerb, _]) => kerb);
+    });
+
+    return (
+        <div class="form-item flex:40%">
+            <label for="houseScore">How the house feels</label>
+            <fieldset name="houseScore" class="flex:row flex:space-around">
+                <div onClick={() => alert(`Has been met by: ${hasMet()}`)}>
+                    {hasMet().length} 🤝
+                </div>
+                <div onClick={() => alert(`Is liked by: ${likes()}`)}>
+                    {likes().length} 👍
+                </div>
+                <div onClick={() => alert(`Is disliked by: ${dislikes()}`)}>
+                    {dislikes().length} 👎
+                </div>
+            </fieldset>
+        </div>
+    );
+}
+
 function PnmEditForm({ uuid, info }) {
     const app = useFirebaseApp();
     const db = getDatabase(app);
@@ -118,12 +156,13 @@ function PnmEditForm({ uuid, info }) {
             </div>
             <div class="flex:prefer-row flex:wrap">
                 <PnmEditFormItem name="fullName" type="text" info={info}>Name</PnmEditFormItem>
-                <PnmEditFormItem name="phone" type="tel" info={info}>Phone Number</PnmEditFormItem>
+                <PnmEditFormItem name="phone" type="tel" info={info}>Phone number</PnmEditFormItem>
                 <PnmEditFormItem name="hometown" type="text" info={info}>Hometown</PnmEditFormItem>
                 <PnmEditFormItem name="major" type="text" info={info}>Major</PnmEditFormItem>
-                <PnmEditFormItemOptions name="contact" options={actives()} info={info}>Primary Contact</PnmEditFormItemOptions>
-                <PnmEditFormItem name="lastContacted" type="date" info={info}>Last Contacted</PnmEditFormItem>
+                <PnmEditFormItemOptions name="contact" options={actives()} info={info}>Primary contact</PnmEditFormItemOptions>
+                <PnmEditFormItem name="lastContacted" type="date" info={info}>Last contacted</PnmEditFormItem>
                 <PnmEditFormItemPerUser uuid={uuid} info={info} />
+                <PnmEditFormFeelsStatus info={info} actives={actives} />
                 <div class="form-item flex:100%">
                     <label for="invitedTo">Invited to</label>
                     <fieldset name="invitedTo" class="flex:prefer-row flex:space-around">
