@@ -354,6 +354,7 @@ function PnmActionButtons(props) {
                     }
                 }
             }
+            return null;
         }
 
         getDb(refDb(db, "/rho/years")).then((snapshot) => {
@@ -361,6 +362,11 @@ function PnmActionButtons(props) {
                 return;
             }
             const path = findPath(snapshot.val(), props.uuid);
+
+            if (!path) {
+                alert("Already deleted! (somebody else probably did at the same time)");
+                navigate("/rho")
+            }
             
             removeDb(refDb(db, path)).then(() => {
                 alert("Succesfully deleted!");
