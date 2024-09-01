@@ -1,11 +1,12 @@
 import { createMemo, createResource, Match, Show, Switch } from "solid-js";
 import { useAuth, useDatabase, useFirebaseApp } from "solid-firebase";
-import { getDatabase, ref as refDb, set as setDb, push as pushDb } from "firebase/database";
+import { getDatabase, ref as refDb, set as setDb, push as pushDb, get as getDb, remove as removeDb } from "firebase/database";
 import { deleteObject, getStorage, ref as refStorage, uploadBytes } from "firebase/storage";
 
 import { PnmPhoto } from "./photo";
 import { activesKerbs } from "../auth";
 import { getAuth } from "firebase/auth";
+import { useNavigate } from "@solidjs/router";
 
 export function PnmEdit({ uuid }) {
     const app = useFirebaseApp();
@@ -184,6 +185,7 @@ function PnmEditForm({ uuid, info }) {
                         </div>
                     </fieldset>
                 </div>
+                <PnmActionButtons uuid={uuid} info={info} />
             </div>
         </form>
     );
@@ -216,7 +218,7 @@ function PnmUploadPhotoButton({ uuid }) {
                 // Done, reload the page to see effects
                 setTimeout(() => {
                     window.location.reload();
-                }, 1000);
+                }, 1500);
             });
         }
 
@@ -319,6 +321,61 @@ function PnmComments({ uuid }) {
                     </Match>
                 </Switch>
             </div>
+        </div>
+    );
+}
+
+function PnmActionButtons(props) {
+    const app = useFirebaseApp();
+    const db = getDatabase(app);
+    const navigate = useNavigate();
+    // const info = useDatabase(refDb(db, `/rho/years/${uuid}`));
+
+    function doToggleFlushed(e) {
+        e.preventDefault();
+
+        setDb(refDb(db, `/rho/people/${props.uuid}/flushed`), props.info.flushed ? false : true);
+    }
+
+    function doDelete(e) {
+        e.preventDefault();
+
+        if (!confirm("Are you sure? Deleting is reserved for removing spam and duplicates, *not* PNMs that we don't like.")) {
+            return;
+        }
+
+        function findPath(years, uuid) {
+            for (const year in years) {
+                const pnms = years[year];
+
+                for (const key in pnms) {
+                    if (pnms[key] == uuid) {
+                        return `rho/years/${year}/${key}`;
+                    }
+                }
+            }
+        }
+
+        getDb(refDb(db, "/rho/years")).then((snapshot) => {
+            if (!snapshot.exists()) {
+                return;
+            }
+            const path = findPath(snapshot.val(), props.uuid);
+            
+            removeDb(refDb(db, path)).then(() => {
+                alert("Succesfully deleted!");
+                navigate("/rho");
+            });
+        });
+    }
+
+    return (
+        <div class="form-item flex:100%">
+            <label for="actions">Actions</label>
+            <fieldset name="actions" class="flex:prefer-row flex:space-around">
+                <button onClick={doToggleFlushed}>{!props.info.flushed ? "Flush 🚽" : "Unflush 🔥"}</button>
+                <button onClick={doDelete}>Delete 🗑️</button>
+            </fieldset>
         </div>
     );
 }
