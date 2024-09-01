@@ -55,7 +55,7 @@ function PnmEditForm({ uuid, info }) {
         const updatedField = e.target?.name;
         if (updatedField) {
             // Make a small update if possible
-            setDb(refDb(db, `/rho/people/${uuid}/${updatedField}`), e.target.checked ?? e.target.value);
+            setDb(refDb(db, `/rho/people/${uuid}/${updatedField}`), e.target.type === "checkbox" ? e.target.checked : e.target.value);
         } else {
             // Or just update the entire document
             console.log(`update whole PNM`)
