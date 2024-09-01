@@ -1,7 +1,7 @@
-import { getDatabase, ref as refDb, set } from "firebase/database";
-import { deleteObject, getBytes, getStorage, ref as refStorage, uploadBytes } from "firebase/storage";
+import { getDatabase, ref as refDb } from "firebase/database";
+import { getStorage, ref as refStorage } from "firebase/storage";
 import { useDatabase, useDownloadURL, useFirebaseApp } from "solid-firebase";
-import { createEffect, createMemo, Match, Show, Switch } from "solid-js";
+import { createMemo, Match, Show, Switch } from "solid-js";
 
 import anonymous from "../../assets/rho/anonymous.jpg";
 
