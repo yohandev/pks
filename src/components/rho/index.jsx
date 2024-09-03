@@ -1,4 +1,4 @@
-import { Match, Switch } from "solid-js";
+import { createMemo, Match, Switch } from "solid-js";
 import { useParams } from "@solidjs/router";
 
 import { PnmEdit } from "./edit";
@@ -8,6 +8,7 @@ import "../../styles/rho.css";
 
 function Rho() {
     const params = useParams();
+    const year = createMemo(() => new Date().getFullYear() + 4);
 
     return (
         <div class="content">
@@ -16,8 +17,8 @@ function Rho() {
                     <PnmEdit uuid={params.uuid} />
                 </Match>
                 <Match when={!params.uuid}>
-                    <AddPnmButton />
-                    <PnmList />
+                    <AddPnmButton year={year()} />
+                    <PnmList year={year()} />
                 </Match>
             </Switch>
         </div>

@@ -9,8 +9,8 @@ export function PnmPhoto({ uuid, size="50px" }) {
     const app = useFirebaseApp();
 
     const db = getDatabase(app);
-    const path = useDatabase(refDb(db, `/rho/people/${uuid}/photo`));
-    const flushed = useDatabase(refDb(db, `/rho/people/${uuid}/flushed`));
+    const path = useDatabase(refDb(db, `/rho/i/${uuid}/photo`));
+    const flushed = useDatabase(refDb(db, `/rho/i/${uuid}/flushed`));
 
     function Fallback() {
         return (

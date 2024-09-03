@@ -1,6 +1,6 @@
 import { createMemo, createResource, Match, Show, Switch } from "solid-js";
 import { useAuth, useDatabase, useFirebaseApp } from "solid-firebase";
-import { getDatabase, ref as refDb, set as setDb, push as pushDb, get as getDb, remove as removeDb } from "firebase/database";
+import { getDatabase, ref as refDb, set as setDb, push as pushDb, get as getDb, remove as removeDb, query } from "firebase/database";
 import { deleteObject, getStorage, ref as refStorage, uploadBytes } from "firebase/storage";
 
 import { PnmPhoto } from "./photo";
@@ -11,7 +11,7 @@ import { useNavigate } from "@solidjs/router";
 export function PnmEdit({ uuid }) {
     const app = useFirebaseApp();
     const db = getDatabase(app);
-    const info = useDatabase(refDb(db, `/rho/people/${uuid}`));
+    const info = useDatabase(refDb(db, `/rho/i/${uuid}`));
 
     return (
         <div class="flex:column">
@@ -79,7 +79,7 @@ function PnmEditFormItemPerUser(props) {
     function onChange(e) {
         e.stopPropagation();
 
-        setDb(refDb(db, `/rho/people/${props.uuid}/score/${currentUser()}`), e.target.value);
+        setDb(refDb(db, `/rho/i/${props.uuid}/score/${currentUser()}`), e.target.value);
     }
 
     return (
@@ -145,11 +145,12 @@ function PnmEditForm({ uuid, info }) {
         const updatedField = e.target?.name;
         if (updatedField) {
             // Make a small update if possible
-            setDb(refDb(db, `/rho/people/${uuid}/${updatedField}`), e.target.type === "checkbox" ? e.target.checked : e.target.value);
+            setDb(refDb(db, `/rho/i/${uuid}/${updatedField}`), e.target.type === "checkbox" ? e.target.checked : e.target.value);
         } else {
             // Or just update the entire document
-            console.log(`update whole PNM`)
-            setDb(refDb(db, `/rho/people/${uuid}`), Object.fromEntries(new FormData(e.target).entries()));
+            for (const [key, val] in new FormData(e.target).entries()) {
+                setDb(refDb(db, `/rho/i/${uuid}/${key}`), val);
+            }
         }
     }
 
@@ -194,7 +195,7 @@ function PnmEditForm({ uuid, info }) {
 function PnmUploadPhotoButton({ uuid }) {
     const app = useFirebaseApp();
     const db = getDatabase(app);
-    const current = useDatabase(refDb(db, `/rho/people/${uuid}/photo`));
+    const current = useDatabase(refDb(db, `/rho/i/${uuid}/photo`));
 
     // Can't destructure props here
     // https://github.com/solidjs/solid/discussions/287#discussioncomment-240864
@@ -213,7 +214,7 @@ function PnmUploadPhotoButton({ uuid }) {
                 if (props.current) {
                     deleteObject(refStorage(storage, `rho/${props.current}_300x300`));
                 }
-                setDb(refDb(db, `/rho/people/${uuid}/photo`), fileUuid);
+                setDb(refDb(db, `/rho/i/${uuid}/photo`), fileUuid);
 
                 // Done, reload the page to see effects
                 setTimeout(() => {
@@ -329,12 +330,11 @@ function PnmActionButtons(props) {
     const app = useFirebaseApp();
     const db = getDatabase(app);
     const navigate = useNavigate();
-    // const info = useDatabase(refDb(db, `/rho/years/${uuid}`));
 
     function doToggleFlushed(e) {
         e.preventDefault();
 
-        setDb(refDb(db, `/rho/people/${props.uuid}/flushed`), props.info.flushed ? false : true);
+        setDb(refDb(db, `/rho/i/${props.uuid}/flushed`), props.info.flushed ? false : true);
     }
 
     function doDelete(e) {
@@ -344,34 +344,9 @@ function PnmActionButtons(props) {
             return;
         }
 
-        function findPath(years, uuid) {
-            for (const year in years) {
-                const pnms = years[year];
-
-                for (const key in pnms) {
-                    if (pnms[key] == uuid) {
-                        return `rho/years/${year}/${key}`;
-                    }
-                }
-            }
-            return null;
-        }
-
-        getDb(refDb(db, "/rho/years")).then((snapshot) => {
-            if (!snapshot.exists()) {
-                return;
-            }
-            const path = findPath(snapshot.val(), props.uuid);
-
-            if (!path) {
-                alert("Already deleted! (somebody else probably did at the same time)");
-                navigate("/rho")
-            }
-            
-            removeDb(refDb(db, path)).then(() => {
-                alert("Succesfully deleted!");
-                navigate("/rho");
-            });
+        removeDb(refDb(db, `/rho/i/${props.uuid}`)).then(() => {
+            alert("Succesfully deleted!");
+            navigate("/rho");
         });
     }
 
