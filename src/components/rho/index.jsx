@@ -24,7 +24,7 @@ function Rho() {
                     <PnmEdit uuid={params.uuid} />
                 </Match>
                 <Match when={!params.uuid}>
-                    <div class="flex:row flex:align-center" style="margin-top: -40px;">
+                    <div class="flex:row flex:align-center" style="margin-top: -20px;">
                         <AddPnmButton year={year()} />
                         <select onChange={changeSortMethod}>
                             <option value="score">Sort by brothers who like</option>
