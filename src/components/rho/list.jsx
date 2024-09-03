@@ -16,14 +16,6 @@ export function PnmList(props) {
         }
         return Object
             .entries(pnms.data)
-            .map(([uuid, info]) => ([uuid, {
-                fullName: info.fullName,
-                inv0: info.inv0,
-                inv1: info.inv1,
-                inv2: info.inv2,
-                flushed: info.flushed,
-                lastContacted: info.lastContacted,
-            }]))
             .toSorted(([_ua, a], [_ub, b]) => {
                 if (a.flushed) {
                     return 1;
@@ -47,7 +39,15 @@ export function PnmList(props) {
                     default:
                         return 0;
                 }
-            });
+            })
+            .map(([uuid, info]) => ([uuid, {
+                fullName: info.fullName,
+                inv0: info.inv0,
+                inv1: info.inv1,
+                inv2: info.inv2,
+                flushed: info.flushed,
+                lastContacted: info.lastContacted,
+            }]));
     });
 
     return (
