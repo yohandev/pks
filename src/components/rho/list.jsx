@@ -14,30 +14,40 @@ export function PnmList(props) {
         if (!pnms.data) {
             return [];
         }
-        return Object.entries(pnms.data).toSorted(([_ua, a], [_ub, b]) => {
-            if (a.flushed) {
-                return 1;
-            }
-            if (b.flushed) {
-                return -1;
-            }
-            switch (props.sort) {
-                case "score":
-                    function score(i) {
-                        if (!i) {
-                            return 0;
+        return Object
+            .entries(pnms.data)
+            .map(([uuid, info]) => ([uuid, {
+                fullName: info.fullName,
+                inv0: info.inv0,
+                inv1: info.inv1,
+                inv2: info.inv2,
+                flushed: info.flushed,
+                lastContacted: info.lastContacted,
+            }]))
+            .toSorted(([_ua, a], [_ub, b]) => {
+                if (a.flushed) {
+                    return 1;
+                }
+                if (b.flushed) {
+                    return -1;
+                }
+                switch (props.sort) {
+                    case "score":
+                        function score(i) {
+                            if (!i) {
+                                return 0;
+                            }
+                            return Object.values(i).reduce((sum, s) => sum + (Number(s) == 2 ? 1 : 0), 0);
                         }
-                        return Object.values(i).reduce((sum, s) => sum + (Number(s) == 2 ? 1 : 0), 0);
-                    }
-                    return score(b.score) - score(a.score);
-                case "inv0":
-                case "inv1":
-                case "inv2":
-                    return (b[props.sort] ? 1 : 0) - (a[props.sort] ? 1 : 0);
-                default:
-                    return 0;
-            }
-        });
+                        return score(b.score) - score(a.score);
+                    case "inv0":
+                    case "inv1":
+                    case "inv2":
+                        return (b[props.sort] ? 1 : 0) - (a[props.sort] ? 1 : 0);
+                    default:
+                        return 0;
+                }
+            });
     });
 
     return (
