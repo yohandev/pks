@@ -2,14 +2,43 @@ import { useDatabase, useFirebaseApp } from "solid-firebase";
 import { getDatabase, ref as refDb, push as pushDb, set as setDb, orderByChild, query, equalTo } from "firebase/database";
 
 import { PnmPhoto } from "./photo";
-import { createEffect, createMemo, For, Match, Show, Switch } from "solid-js";
+import { createMemo, For, Match, Show, Switch } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 
-export function PnmList({ year }) {
+export function PnmList(props) {
     const app = useFirebaseApp();
 
     const db = getDatabase(app);
-    const pnms = useDatabase(query(refDb(db, "/rho/i"), orderByChild("year"), equalTo(year)));
+    const pnms = useDatabase(query(refDb(db, "/rho/i"), orderByChild("year"), equalTo(props.year)));
+    const sortedPnms = createMemo(() => {
+        if (!pnms.data) {
+            return [];
+        }
+        return Object.entries(pnms.data).toSorted(([_ua, a], [_ub, b]) => {
+            if (a.flushed) {
+                return 1;
+            }
+            if (b.flushed) {
+                return -1;
+            }
+            switch (props.sort) {
+                case "score":
+                    function score(i) {
+                        if (!i) {
+                            return 0;
+                        }
+                        return Object.values(i).reduce((sum, s) => sum + (Number(s) == 2 ? 1 : 0), 0);
+                    }
+                    return score(b.score) - score(a.score);
+                case "inv0":
+                case "inv1":
+                case "inv2":
+                    return (b[props.sort] ? 1 : 0) - (a[props.sort] ? 1 : 0);
+                default:
+                    return 0;
+            }
+        });
+    });
 
     return (
         <Switch>
@@ -20,7 +49,7 @@ export function PnmList({ year }) {
             </Match>
             <Match when={pnms.data}>
                 <div class="flex:column">
-                    <For each={Object.entries(pnms.data)}>
+                    <For each={sortedPnms()}>
                         {([uuid, info]) => (
                             <PnmListItem uuid={uuid} info={info} />
                         )}
@@ -83,7 +112,7 @@ export function AddPnmButton({ year }) {
     }
 
     return (
-        <form onSubmit={addPnm} class="margin:10px" style="margin-top: -20px;">
+        <form onSubmit={addPnm} class="margin:10px">
             <input type="submit" value="Add a new PNM"></input>
         </form>
     );
