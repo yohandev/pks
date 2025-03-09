@@ -6,7 +6,7 @@ import { useNavigate } from "@solidjs/router";
 import { PnmPhoto } from "./photo";
 
 function PnmList({ year }) {
-    year = year ?? (new Date().getFullYear() + 3);
+    year = year ?? (new Date().getFullYear() + 4);
 
     const app = useFirebaseApp();
     const db = getDatabase(app);

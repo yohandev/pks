@@ -8,7 +8,7 @@ import "../../styles/rho.css";
 
 function Rho() {
     const params = useParams();
-    const year = createMemo(() => new Date().getFullYear() + 4);
+    const year = createMemo(() => new Date().getFullYear() + 3);
     const [sort, setSort] = createSignal("score");
 
     function changeSortMethod(e) {
